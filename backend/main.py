@@ -20,9 +20,9 @@ async def new_user_id():
 
 @app.get("/new_options")
 async def new_options(user_id: str, conversation_id: str):
+    pass
     current_user = app.users[UUID(user_id)]
     current_conv = current_user.get_conversation(conversation_id)
-    current_conv.forward()
     return {
         "user_id": user_id,
         "conversation_id": current_conv.conv_id,
@@ -37,19 +37,20 @@ async def post_conversation(
     selected_option_index: typing.Optional[int] = None,
 ):
     current_user: User = app.users[UUID(user_id)]
+    current_conv = await current_user.get_conversation(conversation_id, create_new=True)
+
+    if current_conv.conv_done:
+        raise HTTPException(status_code=400, detail="Conversation is done.")
 
     if selected_option_index is not None and conversation_id is None:
-        return HTTPException(
+        raise HTTPException(
             status_code=400, detail="Need conversation_id to select option."
         )
 
-    current_conv = current_user.get_or_create_new_conversation(conversation_id)
+    if conversation_id is not None and selected_option_index is not None:
+        await current_conv.forward(selected_option_index)
 
-    if current_conv.done:
-        return HTTPException(status_code=400, detail="Conversation is done.")
 
-    if selected_option_index is not None:
-        current_conv.forward(selected_option_index)
 
     return {
         "user_id": user_id,
@@ -57,21 +58,21 @@ async def post_conversation(
         "character_name": current_conv.character_name,
         "response": current_conv.conv_steps[-1][1],
         "options": current_conv.conv_options,
-        "done": current_conv.done,
+        "done": current_conv.conv_done,
     }
 
 
 @app.get("/conversation/{user_id}/{conversation_id}")
 async def get_conversation(user_id: str, conversation_id: str):
     current_user = app.users[UUID(user_id)]
-    current_conv = current_user.get_conversation(conversation_id)
+    current_conv = await current_user.get_conversation(conversation_id)
     return {
         "user_id": user_id,
         "conversation_id": current_conv.conv_id,
         "character_name": current_conv.character_name,
-        "history": current_conv.__format_conversation(),
+        "history": current_conv._format_conversation(json=True),
         "options": current_conv.conv_options,
-        "done": current_conv.done,
+        "done": current_conv.conv_done,
     }
 
 

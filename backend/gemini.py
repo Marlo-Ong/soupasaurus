@@ -1,6 +1,8 @@
 import os
 import json
 import random
+import asyncio
+from copy import deepcopy
 from fastapi import HTTPException
 from uuid import uuid4, UUID
 from dotenv import load_dotenv
@@ -87,13 +89,16 @@ class Conversation:
 
         self.init_conversation()
 
-    def __format_conversation(self) -> str:
-        return "\n".join(
-            [
-                f"{a if a == 'user' else self.character_name}: {b}"
-                for a, b in self.conv_steps
-            ]
-        )
+    def _format_conversation(self, json=False) -> str:
+        formatted = [
+            f"{a if a == 'user' else self.character_name}: {b}"
+            for a, b in self.conv_steps
+        ]
+
+        if json:
+            return formatted
+
+        return "\n".join(formatted)
 
     def _get_npc_initial_response(self) -> str:
         prompt_parts = [
@@ -108,7 +113,19 @@ Give an introductory sentence to start the conversation:
 
     # Based on the current conversation, get the next response from the NPC
     def _get_npc_response(self) -> str:
-        pass
+        prompt_parts = [
+            f"""
+You're a {self.character_personality} named {self.character_personality}.
+Don't state your intentions directly, but try to steer the conversation with me to decide if i'm {mtbi_types[self.conv_type]}
+
+Given the following state of the conversation, give me a that continues the conversation:
+{self._format_conversation()}
+
+Response:
+""".strip(),
+        ]
+
+        return json.loads(self.model.generate_content(prompt_parts).text.strip())[0]
 
     # Based on the current conversation, get next options for the user
     def _get_user_options(self) -> list:
@@ -120,7 +137,7 @@ Don't state your intentions directly, but try to steer the conversation with me 
 Given the following state of the conversation, give me two options for the user to respond with:
 
 Current conversation:
-{self.__format_conversation()}
+{self._format_conversation()}
 
 Options:
 """.strip(),
@@ -136,30 +153,44 @@ Options:
             self.conv_steps = [("bot", self._get_npc_initial_response())]
             self.conv_options = self._get_user_options()
         except Exception as e:
+            print("Error on init_conversation", e)
             self.retry_count += 1
             if self.retry_count < 3:
                 self.init_conversation(retry=True)
             else:
                 raise HTTPException(
-                    status_code=404, detail="RETRY LIMIT EXCEEDED on init_conversation."
+                    status_code=500, detail="RETRY LIMIT EXCEEDED on init_conversation."
                 )
 
-    def forward(self, selected_option_index, retry=False) -> None:
+    async def forward(self, selected_option_index, retry=False) -> None:
         if not retry:
             self.retry_count = 0
+            self.temp_conv_steps = deepcopy(self.conv_steps)
+            self.temp_conv_options = deepcopy(self.conv_options)
+            
+            self.conv_steps.append(("user", self.conv_options[selected_option_index]))
+            self.conv_options = []
 
         try:
-            self.conv_steps.append(("user", self.conv_options[selected_option_index]))
-            self.conv_steps.append(("bot", self._get_npc_response()))
+            if not self.conv_steps[-1][0] == "bot":
+                self.conv_steps.append(("bot", self._get_npc_response()))
             self.conv_options = self._get_user_options()
         except Exception as e:
+            print("Error on forward", e)
             self.retry_count += 1
             if self.retry_count < 3:
-                self.forward(selected_option_index, retry=True)
+                await asyncio.sleep(2)
+                await self.forward(selected_option_index, retry=True)
             else:
-                HTTPException(
-                    status_code=404, detail="RETRY LIMIT EXCEEDED on forward."
+                # on error, revert to the previous state
+                self.conv_steps = self.temp_conv_steps
+                self.conv_options = self.temp_conv_options
+                raise HTTPException(
+                    status_code=500, detail="RETRY LIMIT EXCEEDED on forward."
                 )
+
+        del self.temp_conv_steps
+        del self.temp_conv_options
 
 
 class User:
@@ -177,7 +208,7 @@ class User:
         # We want to get a random conversation type that has been seen less than 3 times
         return random.choice([k for k, v in mtbi_types_seen.items() if v < 3])
 
-    def init_conversation(self) -> Conversation:
+    async def init_conversation(self) -> Conversation:
         # unseen characters is the difference between all characters and seen characters
         new_conversation = Conversation(
             conv_character=random.choice(list(set(characters) - self.seen_characters)),
@@ -187,10 +218,17 @@ class User:
         self.conversations[new_conversation.conv_id] = new_conversation
         return new_conversation
 
-    def get_or_create_new_conversation(self, conversation_id) -> Conversation:
+    async def get_conversation(
+        self, conversation_id: str, create_new=False
+    ) -> Conversation:
         try:
-            current_conv = self.conversations[conversation_id]
+            current_conv = self.conversations[UUID(conversation_id)]
         except:
-            current_conv = self.init_conversation()
-            print(f"Created new conversation {current_conv.conv_id}")
+            if create_new:
+                current_conv = await self.init_conversation()
+                print(f"Created new conversation {current_conv.conv_id}")
+            else:
+                raise HTTPException(
+                    status_code=404, detail="Conversation not found for user."
+                )
         return current_conv
