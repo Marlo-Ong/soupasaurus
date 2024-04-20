@@ -1,13 +1,28 @@
-from typing import Union
+import typing
+import requests
+from gemini import Conversation
 from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+# Conversations is {uuid: Conversation}
+conversations = {}
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+@app.get("/conversation/{conversation_id}")
+async def get_conversation(conversation_id):
+    return {
+        "conversation_id": conversation_id,
+    }
+
+
+@app.post("/conversation")
+async def post_conversation(conversation_id: typing.Optional[str] = None):
+    current_conv: Conversation = None
+    if conversation_id is None or conversation_id not in conversations:
+        current_conv = Conversation("EI", "alien")
+        conversations[current_conv.conv_id] = current_conv
+
+    return {
+        "conversation_id": current_conv.conv_id,
+    }
