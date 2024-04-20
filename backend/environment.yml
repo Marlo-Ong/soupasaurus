@@ -1,5 +1,5 @@
 # Environment for conda
-name: backend
+name: soupasaurus
 channels:
   - conda-forge
 dependencies:

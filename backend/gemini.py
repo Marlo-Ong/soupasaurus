@@ -1,5 +1,7 @@
 import os
+import json
 import random
+from fastapi import HTTPException
 from uuid import uuid4, UUID
 from dotenv import load_dotenv
 import google.generativeai as genai
@@ -35,62 +37,30 @@ characters = {
     "Abnormally Large Bird": "simple minded bird who's very optimistic and friendly to the user who only speaks in only short syllable words",
     "Flower Brontosaurus": "nature-loving dino who loves to mention flowers or insert flowers into the conversation any chance he gets, mostly by using puns",
     "Cinnamunchsaurus": "dino stuck in a cereal box who is resigned to his situation and very morose",
-    "Count Dinovamp": "vampire dinosaur who speaks in a classic \"Dracula\" accent and acts very mysterious",
+    "Count Dinovamp": 'vampire dinosaur who speaks in a classic "Dracula" accent and acts very mysterious',
     "Dinodoor": "dimension travelling dinosaur who is emerging from a magical door who uses futuristic slang ",
     "Dinomore": "chunky food-loving dinosaur who is always hungry but self conscious about his weight",
     "Dinosoar": "adventure loving daredevil dinosaur who is a bit absent minded and tends to trail off on sentences",
-    "Jellyjelly": "a calm and chill surfer jellyfish floating in the ocean who uses surfer terminology such as \"cowabunga\" and \"gnarly\"",
+    "Jellyjelly": 'a calm and chill surfer jellyfish floating in the ocean who uses surfer terminology such as "cowabunga" and "gnarly"',
     "Lippysaurus": "a mouthy dinosaur who lives in the ocean who uses very complicated vocabulary",
     "Megladon": "a gruff shark who's a mafia boss and talks in a boston accent with the terminology from a mafia movie",
-    "Pastasaurus": "an italian dinosaur who's actually made of pasta who has an italian accent and slips into using italian words instead of english for words that are commonly known by many people such as \"ciao\" or \"mama mia\"",
-    "Sherlock-saurus": "a detective dinosaur who talks like sherlock holmes, such as \"elementary my dear watson\"",
+    "Pastasaurus": 'an italian dinosaur who\'s actually made of pasta who has an italian accent and slips into using italian words instead of english for words that are commonly known by many people such as "ciao" or "mama mia"',
+    "Sherlock-saurus": 'a detective dinosaur who talks like sherlock holmes, such as "elementary my dear watson"',
     "Spiderlily-saurus": "an assassin dinosaur who's quiet and intimidating who talks with a threatening demeanor ",
     "T-Wrecks": "a brawler-type dinosaur who talks in an aggressive and coarse way",
     "Terrordactyl": "a terrifying alien dinosaur with multiple eyes who uses made up alien words at times but mostly speaks in english (the sentence structure is similar to how yoda may talk)",
     "Tricycleteratops": "a showy circus performer dinosaur who rides a tricycle",
     "Velocityraptor": "a racecar driver dinosaur who has a need for speed, meaning that their speech is like a train of thought and they seem impatient",
-    "Vinylsaur": "a super genz dinosaur who loves collecting vinyls and listening to music and tends to add in a lot of filler words such as \"like\" and \"um\"",
+    "Vinylsaur": 'a super genz dinosaur who loves collecting vinyls and listening to music and tends to add in a lot of filler words such as "like" and "um"',
     "Winosaur": "a wine mom dinosaur with a transatlantic accent, who tends to get distracted talking about her dead ex-husbands before returning to the original conversation",
 }
 
 mtbi_types = {
-    "EI": "Extrovert/Introvert",
-    "SN": "Sensing/Intuition",
-    "TF": "Thinking/Feeling",
-    "JP": "Judging/Perceiving",
+    "EI": "an extrovert or introvert",
+    "SN": "sensing or intuitive",
+    "TF": "thinking or feeling",
+    "JP": "judging or perceiving",
 }
-
-
-class User:
-    def __init__(self) -> None:
-        self.user_id = uuid4()
-        self.seen_characters = set()
-        self.conversations = []
-
-    def get_next_evaluation(self) -> str:
-        mtbi_types_seen = {k: 0 for k in mtbi_types.keys()}
-
-        for conv in self.conversations:
-            mtbi_types_seen[conv.conv_type] += 1
-
-        # We want to get a random conversation type that has been seen less than 3 times
-        return random.choice([k for k, v in mtbi_types_seen.items() if v < 3])
-
-    def init_conversation(self) -> UUID:
-        # unseen characters is the difference between all characters and seen characters
-        print(set(characters) - self.seen_characters)
-        return Conversation(
-            conv_character=set(characters) - self.seen_characters,
-            conv_type=self.get_next_evaluation(),
-        )
-
-    def get_or_create_new_conversation(self, conversation_id) -> str:
-        try:
-            current_conv = self.conversations[conversation_id]
-        except KeyError:
-            current_conv = self.init_conversation()
-            print(f"Created new conversation {current_conv.conv_id}")
-        return self.current_conv
 
 
 class Conversation:
@@ -99,12 +69,14 @@ class Conversation:
         self.conv_id = uuid4()
         self.conv_steps = []
         self.conv_options = []
+        self.conv_done = False
 
         # Model information
         self.model = genai.GenerativeModel(
             model_name="gemini-1.5-pro-latest",
             generation_config=generation_config,
             safety_settings=safety_settings,
+            system_instruction="Speak in english.",
         )
         self.retry_count = 0
 
@@ -115,21 +87,110 @@ class Conversation:
 
         self.init_conversation()
 
-    def init_conversation(self, retry=False) -> str:
+    def __format_conversation(self) -> str:
+        return "\n".join(
+            [
+                f"{a if a == 'user' else self.character_name}: {b}"
+                for a, b in self.conv_steps
+            ]
+        )
+
+    def _get_npc_initial_response(self) -> str:
+        prompt_parts = [
+            f"""
+You're a {self.character_personality} named {self.character_personality}.
+Don't state your intentions directly, but try to steer the conversation with me to decide if i'm {mtbi_types[self.conv_type]}
+Give an introductory sentence to start the conversation:
+""".strip(),
+        ]
+
+        return json.loads(self.model.generate_content(prompt_parts).text.strip())[0]
+
+    # Based on the current conversation, get the next response from the NPC
+    def _get_npc_response(self) -> str:
+        pass
+
+    # Based on the current conversation, get next options for the user
+    def _get_user_options(self) -> list:
+        prompt_parts = [
+            f"""
+You're a {self.character_personality} named {self.character_personality}.
+Don't state your intentions directly, but try to steer the conversation with me to decide if i'm {mtbi_types[self.conv_type]}
+
+Given the following state of the conversation, give me two options for the user to respond with:
+
+Current conversation:
+{self.__format_conversation()}
+
+Options:
+""".strip(),
+        ]
+
+        return json.loads(self.model.generate_content(prompt_parts).text.strip())
+
+    def init_conversation(self, retry=False) -> None:
         if not retry:
-            self.retry = 0
+            self.retry_count = 0
 
         try:
-            pass
+            self.conv_steps = [("bot", self._get_npc_initial_response())]
+            self.conv_options = self._get_user_options()
         except Exception as e:
             self.retry_count += 1
             if self.retry_count < 3:
                 self.init_conversation(retry=True)
             else:
-                print("RETRY LIMIT EXCEEDED.", e)
+                raise HTTPException(
+                    status_code=404, detail="RETRY LIMIT EXCEEDED on init_conversation."
+                )
 
-        # prompt_parts = [
-        #     f"You're a {}. have a conversation with me to decide if i'm an extrovert or introvert"
-        # ]
+    def forward(self, selected_option_index, retry=False) -> None:
+        if not retry:
+            self.retry_count = 0
 
-        return genai.prompt("Start a conversation with a chatbot.")
+        try:
+            self.conv_steps.append(("user", self.conv_options[selected_option_index]))
+            self.conv_steps.append(("bot", self._get_npc_response()))
+            self.conv_options = self._get_user_options()
+        except Exception as e:
+            self.retry_count += 1
+            if self.retry_count < 3:
+                self.forward(selected_option_index, retry=True)
+            else:
+                HTTPException(
+                    status_code=404, detail="RETRY LIMIT EXCEEDED on forward."
+                )
+
+
+class User:
+    def __init__(self) -> None:
+        self.user_id = uuid4()
+        self.seen_characters = set()
+        self.conversations = {}
+
+    def get_next_evaluation(self) -> str:
+        mtbi_types_seen = {k: 0 for k in mtbi_types.keys()}
+
+        for conv_id in self.conversations:
+            mtbi_types_seen[self.conversations[conv_id].conv_type] += 1
+
+        # We want to get a random conversation type that has been seen less than 3 times
+        return random.choice([k for k, v in mtbi_types_seen.items() if v < 3])
+
+    def init_conversation(self) -> Conversation:
+        # unseen characters is the difference between all characters and seen characters
+        new_conversation = Conversation(
+            conv_character=random.choice(list(set(characters) - self.seen_characters)),
+            conv_type=self.get_next_evaluation(),
+        )
+
+        self.conversations[new_conversation.conv_id] = new_conversation
+        return new_conversation
+
+    def get_or_create_new_conversation(self, conversation_id) -> Conversation:
+        try:
+            current_conv = self.conversations[conversation_id]
+        except:
+            current_conv = self.init_conversation()
+            print(f"Created new conversation {current_conv.conv_id}")
+        return current_conv
