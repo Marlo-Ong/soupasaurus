@@ -78,7 +78,7 @@ class Conversation:
             model_name="gemini-1.5-pro-latest",
             generation_config=generation_config,
             safety_settings=safety_settings,
-            system_instruction="Speak in english.",
+            system_instruction="Speak in english.\nOnly return responses in lists. For example, [\"response\"].",
         )
         self.retry_count = 0
 
@@ -162,12 +162,35 @@ Options:
                     status_code=500, detail="RETRY LIMIT EXCEEDED on init_conversation."
                 )
 
+    async def set_new_user_options(self, retry=False) -> None:
+        if not retry:
+            self.retry_count = 0
+            self.temp_conv_options = deepcopy(self.conv_options)
+
+            self.conv_options = []
+
+        try:
+            self.conv_options = self._get_user_options()
+        except Exception as e:
+            print("Error on set_new_user_options", e)
+            self.retry_count += 1
+            if self.retry_count < 3:
+                await asyncio.sleep(3)
+                await self.set_new_user_options(retry=True)
+            else:
+                # on error, revert to the previous state
+                self.conv_options = self.temp_conv_options
+                raise HTTPException(
+                    status_code=500,
+                    detail="RETRY LIMIT EXCEEDED on set_new_user_options.",
+                )
+
     async def forward(self, selected_option_index, retry=False) -> None:
         if not retry:
             self.retry_count = 0
             self.temp_conv_steps = deepcopy(self.conv_steps)
             self.temp_conv_options = deepcopy(self.conv_options)
-            
+
             self.conv_steps.append(("user", self.conv_options[selected_option_index]))
             self.conv_options = []
 
@@ -179,7 +202,7 @@ Options:
             print("Error on forward", e)
             self.retry_count += 1
             if self.retry_count < 3:
-                await asyncio.sleep(2)
+                await asyncio.sleep(3)
                 await self.forward(selected_option_index, retry=True)
             else:
                 # on error, revert to the previous state
@@ -188,9 +211,6 @@ Options:
                 raise HTTPException(
                     status_code=500, detail="RETRY LIMIT EXCEEDED on forward."
                 )
-
-        del self.temp_conv_steps
-        del self.temp_conv_options
 
 
 class User:

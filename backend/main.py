@@ -20,9 +20,9 @@ async def new_user_id():
 
 @app.get("/new_options")
 async def new_options(user_id: str, conversation_id: str):
-    pass
     current_user = app.users[UUID(user_id)]
-    current_conv = current_user.get_conversation(conversation_id)
+    current_conv = await current_user.get_conversation(conversation_id)
+    await current_conv.set_new_user_options()
     return {
         "user_id": user_id,
         "conversation_id": current_conv.conv_id,
@@ -49,8 +49,6 @@ async def post_conversation(
 
     if conversation_id is not None and selected_option_index is not None:
         await current_conv.forward(selected_option_index)
-
-
 
     return {
         "user_id": user_id,
