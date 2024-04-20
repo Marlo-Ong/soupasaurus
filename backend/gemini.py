@@ -62,13 +62,10 @@ mtbi_types = {
 
 
 class User:
-    def __init__(self) -> UUID:
+    def __init__(self) -> None:
         self.user_id = uuid4()
         self.seen_characters = set()
-
         self.conversations = []
-
-        return self.user_id
 
     def get_next_evaluation(self) -> str:
         mtbi_types_seen = {k: 0 for k in mtbi_types.keys()}
@@ -79,19 +76,29 @@ class User:
         # We want to get a random conversation type that has been seen less than 3 times
         return random.choice([k for k, v in mtbi_types_seen.items() if v < 3])
 
-    def init_conversation(self) -> str:
+    def init_conversation(self) -> UUID:
         # unseen characters is the difference between all characters and seen characters
+        print(set(characters) - self.seen_characters)
         return Conversation(
-            unseen_characters=set(characters) - self.seen_characters,
+            conv_character=set(characters) - self.seen_characters,
             conv_type=self.get_next_evaluation(),
         )
 
+    def get_or_create_new_conversation(self, conversation_id) -> str:
+        try:
+            current_conv = self.conversations[conversation_id]
+        except KeyError:
+            current_conv = self.init_conversation()
+            print(f"Created new conversation {current_conv.conv_id}")
+        return self.current_conv
+
 
 class Conversation:
-    def __init__(self, unseen_characters, conv_type) -> UUID:
+    def __init__(self, conv_character, conv_type) -> None:
         # Stateful tracking
         self.conv_id = uuid4()
         self.conv_steps = []
+        self.conv_options = []
 
         # Model information
         self.model = genai.GenerativeModel(
@@ -102,18 +109,11 @@ class Conversation:
         self.retry_count = 0
 
         # Set the character name and personality
-        self.character_name = random.choice(list(unseen_characters))
+        self.character_name = conv_character
         self.character_personality = characters[self.character_name]
         self.conv_type = conv_type
 
         self.init_conversation()
-
-        return {
-            "conversation_id": self.conv_id,
-            "conversation_character": {
-                "name": self.character_name,
-            },
-        }
 
     def init_conversation(self, retry=False) -> str:
         if not retry:
