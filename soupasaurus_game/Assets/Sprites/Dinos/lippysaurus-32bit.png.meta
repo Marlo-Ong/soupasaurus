@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1af955927fe5c384eadb06d28bc46f2a
+guid: 2f9a687340acd455cad674ccf7d6c02e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -505919186639230936
-    second: forest-1_0
+      213: -5497378670649944087
+    second: lippysaurus-32bit_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: forest-1_0
+      name: lippysaurus-32bit_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 6940
-        height: 5206
+        width: 32
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 82860532e2d9af8f0800000000000000
-      internalID: -505919186639230936
+      spriteID: 9e7d914b93365b3b0800000000000000
+      internalID: -5497378670649944087
       vertices: []
       indices: 
       edges: []
@@ -144,7 +144,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      forest-1_0: -505919186639230936
+      lippysaurus-32bit_0: -5497378670649944087
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

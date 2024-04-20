@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d775b3e88b3c74a0d8958f5c52c18f77, type: 3}
-  m_Name: Dino1
+  m_Name: LargeBird
   m_EditorClassIdentifier: 
-  DinoSprite: {fileID: 0}
-  DinoName: 
-  DinoDescription: 
+  DinoSprite: {fileID: -5419690018834563517, guid: 1008ab8aa5db3463d91ae222ea4d4159, type: 3}
+  DinoName: Abnormally Large Bird
+  DinoDescription: simple minded bird who's very optimistic and friendly to the user
+    who only speaks in only short syllable words

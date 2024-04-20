@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DinoLoader : MonoBehaviour
 {
-    [SerializeField] public List<DinoData> dinos;
+    [SerializeField] public Dictionary<string, Sprite> dinos;
     public int UserId;
     public int ConversationId;
 }

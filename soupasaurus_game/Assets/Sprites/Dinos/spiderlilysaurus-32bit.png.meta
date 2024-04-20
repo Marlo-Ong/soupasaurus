@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1af955927fe5c384eadb06d28bc46f2a
+guid: 2e0b5c94ee4784a609c5e6f5702878fc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -505919186639230936
-    second: forest-1_0
+      213: -231250904800061007
+    second: spiderlilysaurus-32bit_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: forest-1_0
+      name: spiderlilysaurus-32bit_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 6940
-        height: 5206
+        width: 32
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 82860532e2d9af8f0800000000000000
-      internalID: -505919186639230936
+      spriteID: 1b9976df68e6accf0800000000000000
+      internalID: -231250904800061007
       vertices: []
       indices: 
       edges: []
@@ -144,7 +144,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      forest-1_0: -505919186639230936
+      spiderlilysaurus-32bit_0: -231250904800061007
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

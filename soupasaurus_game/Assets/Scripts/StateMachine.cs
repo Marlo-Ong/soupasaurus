@@ -11,7 +11,7 @@ public enum State
     Questing
 }
 
-public class StateMachine : MonoBehaviour
+public class StateMachine : Singleton<StateMachine>
 {
     public static event UnityAction<State> OnStateEnter;
     public static event UnityAction<State> OnStateExit;

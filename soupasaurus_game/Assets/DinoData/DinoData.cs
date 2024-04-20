@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/DinoData", order = 1)]
 public class DinoData : ScriptableObject
 {
-    public Image DinoSprite;
+    public Sprite DinoSprite;
     public string DinoName;
-    public string DinoDescription;
+    //public string DinoDescription;
 }
