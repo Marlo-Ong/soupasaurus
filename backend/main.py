@@ -70,6 +70,9 @@ async def get_conversation(user_id: str, conversation_id: str):
         "character_name": current_conv.character_name,
         "history": current_conv._format_conversation(json=True),
         "options": current_conv.conv_options,
+        "type": current_conv.conv_type,
+        "mtbi": current_conv.mtbi,
+        "ingredient": current_conv.ingredient,
         "done": current_conv.conv_done,
     }
 
