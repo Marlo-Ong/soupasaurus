@@ -5,11 +5,7 @@ from gemini import User
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-origins = [
-    "https://mkingco.itch.io",
-    "http://localhost",
-    "http://localhost:10000",
-]
+origins = ["*"]
 
 app = FastAPI()
 app.add_middleware(
@@ -90,17 +86,19 @@ async def get_conversation(user_id: str, conversation_id: str):
         "done": current_conv.conv_done,
     }
 
+
 @app.get("/soup/{user_id}")
 async def get_soup(user_id: str):
     current_user = app.users[UUID(user_id)]
     await current_user.set_user_soup()
-    
+
     return {
         "user_id": user_id,
         "ingredients": current_user.soup_ingredients,
         "mtbi": current_user.overall_mtbi,
         "soup_name": current_user.soup_name,
     }
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=10000)
