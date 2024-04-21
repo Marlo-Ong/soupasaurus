@@ -30,6 +30,7 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
     public Image Level_Background;
     public Image Level_Floor;
     private int currentLevelIndex = -1;
+    private int maxLevels {get {return StateMachine.Instance.NumRounds;}}
 
     [Header("Animation Controllers")]
     public AnimationController PlayerDinoAnim;
@@ -75,8 +76,8 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
 
         if (currentLevelIndex >= 0)
         {
-            Level_Background.sprite = Biomes[currentLevelIndex].Background;
-            Level_Floor.sprite = Biomes[currentLevelIndex].Floor;
+            Level_Background.sprite = Biomes[currentLevelIndex % 3].Background;
+            Level_Floor.sprite = Biomes[currentLevelIndex % 3].Floor;
         }
 
         // Put up loading screen
@@ -101,6 +102,7 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
         Panel_SpeechLoadingDots.SetActive(false);
         Panel_AISpeechBubble.GetComponentInChildren<TMP_Text>().text = c.response;
         Text_DinoName.text = c.character_name;
+        StateMachine.Instance.NamesOfDinosMet.Add(c.character_name);
 
         if (c.done)
         {
@@ -172,14 +174,14 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
 
         yield return new WaitForSeconds(Timing_Delay_BeforeNextLevel);
 
-        if (currentLevelIndex < 2)
+        if (currentLevelIndex < maxLevels - 1)
         {
             CreateLevel();
         }
 
         else
         {
-            StateMachine.Instance.StateChange(State.End);
+            StateMachine.Instance.StateChange(State.Fin);
         }
     }
 

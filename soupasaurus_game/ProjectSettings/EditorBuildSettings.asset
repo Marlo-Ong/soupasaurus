@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Questing.unity
     guid: 7b015ce86f8fe48f5a08d1f7392d4473
+  - enabled: 1
+    path: Assets/Scenes/Friends!-long.unity
+    guid: 3f06dad25678449dea02a12cf71c9fdb
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

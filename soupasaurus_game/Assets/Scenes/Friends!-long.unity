@@ -130,13 +130,14 @@ GameObject:
   - component: {fileID: 122920709}
   - component: {fileID: 122920711}
   - component: {fileID: 122920710}
+  - component: {fileID: 122920712}
   m_Layer: 5
   m_Name: dino 1 (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &122920709
 RectTransform:
   m_ObjectHideFlags: 0
@@ -194,6 +195,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122920708}
   m_CullTransparentMesh: 1
+--- !u!114 &122920712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122920708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 2
+  IsLooped: 1
+  PlaysOnStart: 1
 --- !u!1 &144187042
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,13 +367,14 @@ GameObject:
   - component: {fileID: 202805709}
   - component: {fileID: 202805711}
   - component: {fileID: 202805710}
+  - component: {fileID: 202805712}
   m_Layer: 5
   m_Name: dino 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &202805709
 RectTransform:
   m_ObjectHideFlags: 0
@@ -412,6 +432,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 202805708}
   m_CullTransparentMesh: 1
+--- !u!114 &202805712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202805708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 2
+  IsLooped: 1
+  PlaysOnStart: 1
 --- !u!1 &224631821
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,13 +461,14 @@ GameObject:
   - component: {fileID: 224631822}
   - component: {fileID: 224631824}
   - component: {fileID: 224631823}
+  - component: {fileID: 224631825}
   m_Layer: 5
   m_Name: dino 1 (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &224631822
 RectTransform:
   m_ObjectHideFlags: 0
@@ -487,6 +526,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224631821}
   m_CullTransparentMesh: 1
+--- !u!114 &224631825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224631821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 2
+  IsLooped: 1
+  PlaysOnStart: 1
 --- !u!1 &264447394
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,7 +626,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 264447397}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1292522171}
+        m_TargetAssemblyTypeName: DinoFriendLoader, Assembly-CSharp
+        m_MethodName: Restart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &264447397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1040,13 +1109,14 @@ GameObject:
   - component: {fileID: 576323546}
   - component: {fileID: 576323548}
   - component: {fileID: 576323547}
+  - component: {fileID: 576323549}
   m_Layer: 5
   m_Name: dino 1 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &576323546
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1104,6 +1174,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 576323545}
   m_CullTransparentMesh: 1
+--- !u!114 &576323549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576323545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 2
+  IsLooped: 1
+  PlaysOnStart: 1
 --- !u!1 &773596093
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,13 +1278,14 @@ GameObject:
   - component: {fileID: 1030733984}
   - component: {fileID: 1030733986}
   - component: {fileID: 1030733985}
+  - component: {fileID: 1030733987}
   m_Layer: 5
   m_Name: dino 1 (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1030733984
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1254,6 +1343,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1030733983}
   m_CullTransparentMesh: 1
+--- !u!114 &1030733987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030733983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 2
+  IsLooped: 1
+  PlaysOnStart: 1
 --- !u!1 &1189961427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,13 +1372,14 @@ GameObject:
   - component: {fileID: 1189961428}
   - component: {fileID: 1189961430}
   - component: {fileID: 1189961429}
+  - component: {fileID: 1189961431}
   m_Layer: 5
   m_Name: dino 1 (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1189961428
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1329,6 +1437,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1189961427}
   m_CullTransparentMesh: 1
+--- !u!114 &1189961431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189961427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 2
+  IsLooped: 1
+  PlaysOnStart: 1
 --- !u!1 &1201081738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1340,13 +1466,14 @@ GameObject:
   - component: {fileID: 1201081739}
   - component: {fileID: 1201081741}
   - component: {fileID: 1201081740}
+  - component: {fileID: 1201081742}
   m_Layer: 5
   m_Name: dino 1 (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1201081739
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1404,6 +1531,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1201081738}
   m_CullTransparentMesh: 1
+--- !u!114 &1201081742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201081738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 2
+  IsLooped: 1
+  PlaysOnStart: 1
+--- !u!1 &1292522170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1292522172}
+  - component: {fileID: 1292522171}
+  m_Layer: 0
+  m_Name: DinoFriendLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1292522171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292522170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc487890b35b74dff94a6c620504ada6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DinoFriends:
+  - {fileID: 202805710}
+  - {fileID: 576323547}
+  - {fileID: 1476338647}
+  - {fileID: 1313592933}
+  - {fileID: 1479739124}
+  - {fileID: 122920710}
+  - {fileID: 1555742735}
+  - {fileID: 1189961429}
+  - {fileID: 1574785719}
+  - {fileID: 1201081740}
+  - {fileID: 224631823}
+  - {fileID: 1030733985}
+--- !u!4 &1292522172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292522170}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.18741599, y: -0.41135475, z: 23.55529}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1313592931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,13 +1617,14 @@ GameObject:
   - component: {fileID: 1313592932}
   - component: {fileID: 1313592934}
   - component: {fileID: 1313592933}
+  - component: {fileID: 1313592935}
   m_Layer: 5
   m_Name: dino 1 (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1313592932
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1479,6 +1682,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1313592931}
   m_CullTransparentMesh: 1
+--- !u!114 &1313592935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313592931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 2
+  IsLooped: 1
+  PlaysOnStart: 1
 --- !u!1 &1476338645
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,13 +1711,14 @@ GameObject:
   - component: {fileID: 1476338646}
   - component: {fileID: 1476338648}
   - component: {fileID: 1476338647}
+  - component: {fileID: 1476338649}
   m_Layer: 5
   m_Name: dino 1 (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1476338646
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1554,6 +1776,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1476338645}
   m_CullTransparentMesh: 1
+--- !u!114 &1476338649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1476338645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 2
+  IsLooped: 1
+  PlaysOnStart: 1
 --- !u!1 &1479739122
 GameObject:
   m_ObjectHideFlags: 0
@@ -1565,13 +1805,14 @@ GameObject:
   - component: {fileID: 1479739123}
   - component: {fileID: 1479739125}
   - component: {fileID: 1479739124}
+  - component: {fileID: 1479739126}
   m_Layer: 5
   m_Name: dino 1 (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1479739123
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1629,6 +1870,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479739122}
   m_CullTransparentMesh: 1
+--- !u!114 &1479739126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479739122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 2
+  IsLooped: 1
+  PlaysOnStart: 1
 --- !u!1 &1555742733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1640,13 +1899,14 @@ GameObject:
   - component: {fileID: 1555742734}
   - component: {fileID: 1555742736}
   - component: {fileID: 1555742735}
+  - component: {fileID: 1555742737}
   m_Layer: 5
   m_Name: dino 1 (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1555742734
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1704,6 +1964,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1555742733}
   m_CullTransparentMesh: 1
+--- !u!114 &1555742737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555742733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 2
+  IsLooped: 1
+  PlaysOnStart: 1
 --- !u!1 &1574785717
 GameObject:
   m_ObjectHideFlags: 0
@@ -1715,13 +1993,14 @@ GameObject:
   - component: {fileID: 1574785718}
   - component: {fileID: 1574785720}
   - component: {fileID: 1574785719}
+  - component: {fileID: 1574785721}
   m_Layer: 5
   m_Name: dino 1 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1574785718
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1779,6 +2058,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1574785717}
   m_CullTransparentMesh: 1
+--- !u!114 &1574785721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574785717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 2
+  IsLooped: 1
+  PlaysOnStart: 1
 --- !u!1 &1686896680
 GameObject:
   m_ObjectHideFlags: 0
@@ -1922,3 +2219,4 @@ SceneRoots:
   - {fileID: 488424157}
   - {fileID: 179164301}
   - {fileID: 536533900}
+  - {fileID: 1292522172}

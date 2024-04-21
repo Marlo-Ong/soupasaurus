@@ -10,8 +10,8 @@ public enum State
     Title,
     Menu,
     Questing,
-    End,
-    Soup
+    Fin,
+    Friends
 }
 
 public class StateMachine : Singleton<StateMachine>
@@ -19,9 +19,12 @@ public class StateMachine : Singleton<StateMachine>
     public static event UnityAction<State> OnStateEnter;
     public static event UnityAction<State> OnStateExit;
     public State CurrentState;
+    public int NumRounds;
+    public List<string> NamesOfDinosMet;
 
     void Start()
     {
+        NamesOfDinosMet = new();
         StateEnter(State.Title);
     }
 
@@ -45,6 +48,10 @@ public class StateMachine : Singleton<StateMachine>
                 break;
             case State.Questing:
                 QuestSceneManager.Instance.InitializeScene();
+                break;
+            case State.Fin:
+                break;
+            case State.Friends:
                 break;
         }
 
@@ -70,7 +77,13 @@ public class StateMachine : Singleton<StateMachine>
 
     public void StartCooking()
     {
+        GameObject.Find("Canvas").SetActive(false);
+    }
+
+    public void ChooseGameplayLength(int rounds)
+    {
         SceneManager.LoadSceneAsync(1);
+        NumRounds = rounds;
         StateChange(State.Questing);
     }
 }

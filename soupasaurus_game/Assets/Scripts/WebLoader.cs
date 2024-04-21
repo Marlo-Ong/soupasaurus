@@ -15,6 +15,15 @@ public class OptionsObject
 }
 
 [Serializable]
+public class SoupObject
+{
+    public string user_id;
+    public string[] ingredients;
+    public string mbti;
+    public string soup_name;
+}
+
+[Serializable]
 public class UserIDObject
 {
     public string user_id;
@@ -40,6 +49,7 @@ public class WebLoader : Singleton<WebLoader>
     public static event UnityAction<ConvoObject> OnSubsequentMessage;
     public static event UnityAction<string[]> OnNewOptionsGot;
     public static event UnityAction<string> OnUserIDGot;
+    public static event UnityAction<SoupObject> OnGetSoup;
 
     public void GetUserID()
     {
@@ -176,6 +186,35 @@ public class WebLoader : Singleton<WebLoader>
             ConvoObject c = JsonUtility.FromJson<ConvoObject>(uwr.downloadHandler.text);
             Debug.Log($"Successfully posted subsequent message.");
             OnSubsequentMessage?.Invoke(c);
+        }
+    }
+
+    IEnumerator ContinueGetSoup()
+    {
+        if (string.IsNullOrEmpty(UserID) || string.IsNullOrEmpty(ConversationID))
+        {
+            Debug.LogWarning("No user ID or convo ID found when trying to GET /soup");
+            yield break;
+        }
+
+        // Construct the URI with the score
+        string uri = $"{URI}/soup/user_id={UserID}";
+
+        // Create the UnityWebRequest
+        using UnityWebRequest uwr = UnityWebRequest.Get(uri);
+
+        // Send the request and wait for it to complete
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.ConnectionError)
+        {
+            Debug.LogWarning("Error: " + uwr.error);
+        }
+        else
+        {
+            SoupObject c = JsonUtility.FromJson<SoupObject>(uwr.downloadHandler.text);
+            Debug.Log($"Successfully got soup: {uwr.downloadHandler.text}");
+            OnGetSoup?.Invoke(c);
         }
     }
 }

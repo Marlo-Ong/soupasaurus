@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DinoLoader : Singleton<DinoLoader>
 {
@@ -8,6 +9,7 @@ public class DinoLoader : Singleton<DinoLoader>
     public List<string> dinoNames;
     public List<Sprite> dinoSprites;
     public SpriteRenderer OtherDinoSpriteR;
+    public List<Image> DinoFriends;
 
     
     void OnEnable()
