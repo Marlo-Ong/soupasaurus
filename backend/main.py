@@ -3,8 +3,22 @@ import typing
 from uuid import UUID
 from gemini import User
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+
+origins = [
+    "https://mkingco.itch.io",
+    "http://localhost",
+    "http://localhost:10000",
+]
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # users is {uuid: User}
 app.users = {}
