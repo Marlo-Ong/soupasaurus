@@ -67,6 +67,17 @@ mtbi_split_types = {
     "JP": ["judging", "perceiving"],
 }
 
+mtbi_types_to_letters = {
+    "extroverted": "E",
+    "introverted": "I",
+    "sensing": "S",
+    "intuitive": "N",
+    "thinking": "T",
+    "feeling": "F",
+    "judging": "J",
+    "perceiving": "P",
+}
+
 mtbi_ingredients = {
     "EI": ["bold soup base", "light soup base"],
     "SN": ["typical vegetable", "exotic vegetable"],
@@ -122,6 +133,8 @@ class Conversation:
                 "uses_left": api_keys[selected_key],
                 "last_refreshed": time.time(),
             }
+
+        print(json.dumps(self.api_key_state, indent=2))
 
         genai.configure(api_key=selected_key)
         self.model = genai.GenerativeModel(
@@ -184,11 +197,14 @@ Come up with the proper noun names of these ingredients.
 Write a final message that flows well with the rest of the conversation.
 Word it like the ingredient is being given to the user
 Include the ingredient in the message
+Ingredients should be normal, and fit into a soup recipe that you could cook at home
+Ingredients should not be too exotic or out of place, but match the character, and the mbti_type selected
+Ingredients should not be dinosaur or dragon related.
 
 Use the following format and types:
 {{
-    "ingredient": string
     "mtbi_type": "{mtbi_split_types[self.conv_type][0]}" | "{mtbi_split_types[self.conv_type][1]}"
+    "ingredient": string
     "message": string
 }}
 """.strip(),
@@ -315,6 +331,86 @@ class User:
         self.seen_characters = set()
         self.conversations = {}
 
+        self.overall_mtbi = ""
+        self.soup_name = None
+        self.soup_ingredients = []
+
+        # Model information
+        self.api_key_state = {
+            key: {
+                "uses_left": limit,
+                "last_refreshed": time.time(),
+            }
+            for key, limit in api_keys.items()
+        }
+        self.__reconfigure_model()
+
+    def __reconfigure_model(self) -> None:
+        # get a list of selectable keys, e.g. if they still have uses left or if 2 minutes have passed since last refresh
+        selectable_keys = [
+            key
+            for key, value in self.api_key_state.items()
+            if value["uses_left"] > 0
+            or value["last_refreshed"] - time.time() > (60 * 2)
+        ]
+
+        # select and refresh if needed
+        selected_key = random.choice(selectable_keys)
+        self.api_key_state[selected_key]["uses_left"] -= 1
+        if self.api_key_state[selected_key]["last_refreshed"] - time.time() > (60 * 2):
+            self.api_key_state[selected_key] = {
+                "uses_left": api_keys[selected_key],
+                "last_refreshed": time.time(),
+            }
+
+        print(json.dumps(self.api_key_state, indent=2))
+
+        genai.configure(api_key=selected_key)
+        self.model = genai.GenerativeModel(
+            model_name="gemini-1.5-pro-latest",
+            generation_config=generation_config,
+            safety_settings=safety_settings,
+            system_instruction="Speak in english.\nDo not include names or headers in the response.",
+        )
+
+    def _get_soup_score_tm(self) -> str:
+        prompt_parts = [
+            f"""
+Our brave user has been talking to a variety of characters to determine their personality types. The user has been talking to the following characters:
+{", ".join(self.seen_characters)}
+
+From these characters, the user has received a variety of ingredients:
+{", ".join(self.soup_ingredients)}
+
+The user has been defined as a {self.overall_mtbi} personality type.
+
+Based on this information, name a soup type, (for example "Chicken Noodle Soup", or "Tomato bisque") based on the ingredients provided.
+Select only up to six ingredients from the list of ingredients provided.
+The soup should have a creative name, as if it were being presented in a michelin star restaurant.
+As often as possible, most of the ingredients should be compatable with the chosen soup type.
+
+Use the following format and types:
+{{
+    "used_ingredients": Array<string>
+    "soup_type": string
+}}
+""".strip(),
+        ]
+
+        self.__reconfigure_model()
+        generation = json.loads(self.model.generate_content(prompt_parts).text.strip())
+        if type(generation) == list:  # Sometimes the response is a list
+            generation = generation[0]
+
+        assert (
+            "soup_type" in generation
+        ), "soup_type not found in generation." + json.dumps(generation)
+        assert (
+            "used_ingredients" in generation
+        ), "used_ingredients not found in generation." + json.dumps(generation)
+
+        return generation
+
     def get_next_evaluation(self) -> str:
         mtbi_types_seen = {k: 0 for k in mtbi_types.keys()}
 
@@ -348,3 +444,37 @@ class User:
                     status_code=404, detail="Conversation not found for user."
                 )
         return current_conv
+
+    async def set_user_soup(self) -> None:
+        self.soup_ingredients = []
+        self.overall_mtbi = ""
+        self.soup_name = None
+
+        overall_mtbi_scores = {k: 0 for k in mtbi_types.keys()}
+
+        for conv_id in self.conversations:
+            if not self.conversations[conv_id].conv_done:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Cannot start soup process without all conversations having been wrapped up.",
+                )
+            self.soup_ingredients.append(self.conversations[conv_id].ingredient)
+            bias_letter = mtbi_types_to_letters[self.conversations[conv_id].mtbi]
+            for score_region in overall_mtbi_scores:
+                if bias_letter in score_region:
+                    overall_mtbi_scores[score_region] += (
+                        -1 if score_region.index(bias_letter) == 0 else 1
+                    )
+                    break
+
+        for score_region in overall_mtbi_scores:
+            if overall_mtbi_scores[score_region] > 0:
+                self.overall_mtbi += score_region[0]
+            elif overall_mtbi_scores[score_region] < 0:
+                self.overall_mtbi += score_region[1]
+            else:
+                self.overall_mtbi += random.choice(score_region)
+
+        da_soup_score = self._get_soup_score_tm()
+        self.soup_name = da_soup_score["soup_type"]
+        self.soup_ingredients = da_soup_score["used_ingredients"]
