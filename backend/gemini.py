@@ -418,7 +418,7 @@ Use the following format and types:
             mtbi_types_seen[self.conversations[conv_id].conv_type] += 1
 
         # We want to get a random conversation type that has been seen less than 3 times
-        return random.choice([k for k, v in mtbi_types_seen.items() if v < 3])
+        return min([(k,v) for k, v in mtbi_types_seen.items() if v < 3], key=lambda x: x[1])[0]
 
     async def init_conversation(self) -> Conversation:
         # unseen characters is the difference between all characters and seen characters
