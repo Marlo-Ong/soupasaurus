@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 07c00a43e1236413d9c650b7ca356a20
+guid: 1119c6fa682ee4926941a6984242fa58
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2749404804323082466
-    second: x-out-button-32bit_0
+      213: 3131035444260704208
+    second: ok-button-white-32bit_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -96,30 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: x-out-button-32bit_0
+      name: ok-button-white-32bit_0
       rect:
         serializedVersion: 2
         x: 2
-        y: 2
-        width: 28
-        height: 28
+        y: 1
+        width: 29
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e1ff19eb5e628d9d0800000000000000
-      internalID: -2749404804323082466
+      spriteID: 0df015ac52ca37b20800000000000000
+      internalID: 3131035444260704208
       vertices: []
       indices: 
       edges: []
@@ -144,7 +131,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      x-out-button-32bit_0: -2749404804323082466
+      ok-button-white-32bit_0: 3131035444260704208
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
