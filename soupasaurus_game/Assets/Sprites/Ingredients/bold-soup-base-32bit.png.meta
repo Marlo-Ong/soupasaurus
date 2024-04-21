@@ -191,7 +191,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bold-soup-base-32bit_0: 5799712434856777339
+      bold-soup-base-32bit_1: 6220117507380575146
+      bold-soup-base-32bit_2: -1578012157635680341
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

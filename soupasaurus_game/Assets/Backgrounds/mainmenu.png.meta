@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: bb7921d2d0aa2b7438230623bf1922fd
+guid: ee7213a4cac1f45bcaa9894976c7a530
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2790214565763333351
-    second: ocean-3_0
+      213: -9114789695211296444
+    second: mainmenu_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ocean-3_0
+      name: mainmenu_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 4000
-        height: 3000
+        width: 2532
+        height: 1170
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -114,8 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9134e88b2aa2749d0800000000000000
-      internalID: -2790214565763333351
+      spriteID: 4492a8e7013c18180800000000000000
+      internalID: -9114789695211296444
       vertices: []
       indices: 
       edges: []

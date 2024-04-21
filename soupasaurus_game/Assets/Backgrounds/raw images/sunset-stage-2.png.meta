@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sunset-stage-2_0: -4896849438614101653
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
