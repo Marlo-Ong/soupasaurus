@@ -7,6 +7,7 @@ public class SoupUpdater : MonoBehaviour
 {
     public List<TMP_Text> IngredientContainers;
     public TMP_Text SoupName;
+    public TMP_Text MBTIDescription;
     public Dictionary<string, string> MBTIDescriptions;
 
     void Start()
