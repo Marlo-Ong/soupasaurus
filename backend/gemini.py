@@ -1,17 +1,13 @@
-import os
+import time
 import json
 import random
 import asyncio
 from copy import deepcopy
 from fastapi import HTTPException
 from uuid import uuid4, UUID
-from dotenv import load_dotenv
 import google.generativeai as genai
 
-load_dotenv()
-
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key=GEMINI_API_KEY)
+api_keys = json.load(open("api_keys.json"))
 
 # Set up the model
 generation_config = {
@@ -64,6 +60,31 @@ mtbi_types = {
     "JP": "judging or perceiving",
 }
 
+mtbi_split_types = {
+    "EI": ["extroverted", "introverted"],
+    "SN": ["sensing", "intuitive"],
+    "TF": ["thinking", "feeling"],
+    "JP": ["judging", "perceiving"],
+}
+
+mtbi_types_to_letters = {
+    "extroverted": "E",
+    "introverted": "I",
+    "sensing": "S",
+    "intuitive": "N",
+    "thinking": "T",
+    "feeling": "F",
+    "judging": "J",
+    "perceiving": "P",
+}
+
+mtbi_ingredients = {
+    "EI": ["bold soup base", "light soup base"],
+    "SN": ["typical vegetable", "exotic vegetable"],
+    "TF": ["typical spice", "exotic spice"],
+    "JP": ["red meat/fish", "white meat/white fish"],
+}
+
 
 class Conversation:
     def __init__(self, conv_character, conv_type) -> None:
@@ -73,13 +94,19 @@ class Conversation:
         self.conv_options = []
         self.conv_done = False
 
+        # Conclusion info
+        self.mtbi = None
+        self.ingredient = None
+
         # Model information
-        self.model = genai.GenerativeModel(
-            model_name="gemini-1.5-pro-latest",
-            generation_config=generation_config,
-            safety_settings=safety_settings,
-            system_instruction="Speak in english.\nOnly return responses in lists. For example, [\"response\"].",
-        )
+        self.api_key_state = {
+            key: {
+                "uses_left": limit,
+                "last_refreshed": time.time(),
+            }
+            for key, limit in api_keys.items()
+        }
+        self.__reconfigure_model()
         self.retry_count = 0
 
         # Set the character name and personality
@@ -88,6 +115,34 @@ class Conversation:
         self.conv_type = conv_type
 
         self.init_conversation()
+
+    def __reconfigure_model(self) -> None:
+        # get a list of selectable keys, e.g. if they still have uses left or if 2 minutes have passed since last refresh
+        selectable_keys = [
+            key
+            for key, value in self.api_key_state.items()
+            if value["uses_left"] > 0
+            or value["last_refreshed"] - time.time() > (60 * 2)
+        ]
+
+        # select and refresh if needed
+        selected_key = random.choice(selectable_keys)
+        self.api_key_state[selected_key]["uses_left"] -= 1
+        if self.api_key_state[selected_key]["last_refreshed"] - time.time() > (60 * 2):
+            self.api_key_state[selected_key] = {
+                "uses_left": api_keys[selected_key],
+                "last_refreshed": time.time(),
+            }
+
+        print(json.dumps(self.api_key_state, indent=2))
+
+        genai.configure(api_key=selected_key)
+        self.model = genai.GenerativeModel(
+            model_name="gemini-1.5-pro-latest",
+            generation_config=generation_config,
+            safety_settings=safety_settings,
+            system_instruction='Speak in english.\nOnly return responses in lists. For example, ["response"]. Do not include names or headers in the response.',
+        )
 
     def _format_conversation(self, json=False) -> str:
         formatted = [
@@ -109,6 +164,7 @@ Give an introductory sentence to start the conversation:
 """.strip(),
         ]
 
+        self.__reconfigure_model()
         return json.loads(self.model.generate_content(prompt_parts).text.strip())[0]
 
     # Based on the current conversation, get the next response from the NPC
@@ -118,14 +174,58 @@ Give an introductory sentence to start the conversation:
 You're a {self.character_personality} named {self.character_personality}.
 Don't state your intentions directly, but try to steer the conversation with me to decide if i'm {mtbi_types[self.conv_type]}
 
-Given the following state of the conversation, give me a that continues the conversation:
+Given the following state of the conversation, give me a response that continues the conversation.
 {self._format_conversation()}
 
 Response:
 """.strip(),
         ]
 
+        self.__reconfigure_model()
         return json.loads(self.model.generate_content(prompt_parts).text.strip())[0]
+
+    def _get_npc_final_response(self) -> str:
+        prompt_parts = [
+            f"""
+You're a {self.character_personality} named {self.character_personality}. You have been having a conversation with me to determine if i'm {mtbi_types[self.conv_type]}
+
+Below is the conversation so far:
+{self._format_conversation()}
+
+End the conversation now and offer me an ingredient based on the character of the user that {self.character_name} has been talking to. Offer me {mtbi_ingredients[self.conv_type][0]} if i'm {mtbi_split_types[self.conv_type][0]}. If i'm {mtbi_split_types[self.conv_type][1]}, offer me a {mtbi_ingredients[self.conv_type][1]}.
+Come up with the proper noun names of these ingredients.
+Write a final message that flows well with the rest of the conversation.
+Word it like the ingredient is being given to the user
+Include the ingredient in the message
+Ingredients should be normal, and fit into a soup recipe that you could cook at home
+Ingredients should not be too exotic or out of place, but match the character, and the mbti_type selected
+Ingredients should not be dinosaur or dragon related.
+
+Use the following format and types:
+{{
+    "mtbi_type": "{mtbi_split_types[self.conv_type][0]}" | "{mtbi_split_types[self.conv_type][1]}"
+    "ingredient": string
+    "message": string
+}}
+""".strip(),
+        ]
+
+        self.__reconfigure_model()
+        generation = json.loads(self.model.generate_content(prompt_parts).text.strip())
+        if type(generation) == list:  # Sometimes the response is a list
+            generation = generation[0]
+
+        assert (
+            "ingredient" in generation
+        ), "ingredient not found in generation." + json.dumps(generation)
+        assert (
+            "mtbi_type" in generation
+        ), "mtbi_type not found in generation." + json.dumps(generation)
+        assert "message" in generation, "message not found in generation." + json.dumps(
+            generation
+        )
+
+        return generation
 
     # Based on the current conversation, get next options for the user
     def _get_user_options(self) -> list:
@@ -143,6 +243,7 @@ Options:
 """.strip(),
         ]
 
+        self.__reconfigure_model()
         return json.loads(self.model.generate_content(prompt_parts).text.strip())
 
     def init_conversation(self, retry=False) -> None:
@@ -175,7 +276,7 @@ Options:
             print("Error on set_new_user_options", e)
             self.retry_count += 1
             if self.retry_count < 3:
-                await asyncio.sleep(3)
+                await asyncio.sleep(5)
                 await self.set_new_user_options(retry=True)
             else:
                 # on error, revert to the previous state
@@ -194,20 +295,31 @@ Options:
             self.conv_steps.append(("user", self.conv_options[selected_option_index]))
             self.conv_options = []
 
+            if len([step for step in self.conv_steps if step[0] == "user"]) >= 3:
+                self.conv_done = True
+
         try:
             if not self.conv_steps[-1][0] == "bot":
-                self.conv_steps.append(("bot", self._get_npc_response()))
-            self.conv_options = self._get_user_options()
+                if not self.conv_done:
+                    self.conv_steps.append(("bot", self._get_npc_response()))
+                else:
+                    final_assessment = self._get_npc_final_response()
+                    self.mtbi = final_assessment["mtbi_type"]
+                    self.ingredient = final_assessment["ingredient"]
+                    self.conv_steps.append(("bot", final_assessment["message"]))
+            if not self.conv_done:
+                self.conv_options = self._get_user_options()
         except Exception as e:
             print("Error on forward", e)
             self.retry_count += 1
             if self.retry_count < 3:
-                await asyncio.sleep(3)
+                await asyncio.sleep(5)
                 await self.forward(selected_option_index, retry=True)
             else:
                 # on error, revert to the previous state
                 self.conv_steps = self.temp_conv_steps
                 self.conv_options = self.temp_conv_options
+                self.conv_done = False
                 raise HTTPException(
                     status_code=500, detail="RETRY LIMIT EXCEEDED on forward."
                 )
@@ -218,6 +330,86 @@ class User:
         self.user_id = uuid4()
         self.seen_characters = set()
         self.conversations = {}
+
+        self.overall_mtbi = ""
+        self.soup_name = None
+        self.soup_ingredients = []
+
+        # Model information
+        self.api_key_state = {
+            key: {
+                "uses_left": limit,
+                "last_refreshed": time.time(),
+            }
+            for key, limit in api_keys.items()
+        }
+        self.__reconfigure_model()
+
+    def __reconfigure_model(self) -> None:
+        # get a list of selectable keys, e.g. if they still have uses left or if 2 minutes have passed since last refresh
+        selectable_keys = [
+            key
+            for key, value in self.api_key_state.items()
+            if value["uses_left"] > 0
+            or value["last_refreshed"] - time.time() > (60 * 2)
+        ]
+
+        # select and refresh if needed
+        selected_key = random.choice(selectable_keys)
+        self.api_key_state[selected_key]["uses_left"] -= 1
+        if self.api_key_state[selected_key]["last_refreshed"] - time.time() > (60 * 2):
+            self.api_key_state[selected_key] = {
+                "uses_left": api_keys[selected_key],
+                "last_refreshed": time.time(),
+            }
+
+        print(json.dumps(self.api_key_state, indent=2))
+
+        genai.configure(api_key=selected_key)
+        self.model = genai.GenerativeModel(
+            model_name="gemini-1.5-pro-latest",
+            generation_config=generation_config,
+            safety_settings=safety_settings,
+            system_instruction="Speak in english.\nDo not include names or headers in the response.",
+        )
+
+    def _get_soup_score_tm(self) -> str:
+        prompt_parts = [
+            f"""
+Our brave user has been talking to a variety of characters to determine their personality types. The user has been talking to the following characters:
+{", ".join(self.seen_characters)}
+
+From these characters, the user has received a variety of ingredients:
+{", ".join(self.soup_ingredients)}
+
+The user has been defined as a {self.overall_mtbi} personality type.
+
+Based on this information, name a soup type, (for example "Chicken Noodle Soup", or "Tomato bisque") based on the ingredients provided.
+Select only up to six ingredients from the list of ingredients provided.
+The soup should have a creative name, as if it were being presented in a michelin star restaurant.
+As often as possible, most of the ingredients should be compatable with the chosen soup type.
+
+Use the following format and types:
+{{
+    "used_ingredients": Array<string>
+    "soup_type": string
+}}
+""".strip(),
+        ]
+
+        self.__reconfigure_model()
+        generation = json.loads(self.model.generate_content(prompt_parts).text.strip())
+        if type(generation) == list:  # Sometimes the response is a list
+            generation = generation[0]
+
+        assert (
+            "soup_type" in generation
+        ), "soup_type not found in generation." + json.dumps(generation)
+        assert (
+            "used_ingredients" in generation
+        ), "used_ingredients not found in generation." + json.dumps(generation)
+
+        return generation
 
     def get_next_evaluation(self) -> str:
         mtbi_types_seen = {k: 0 for k in mtbi_types.keys()}
@@ -252,3 +444,37 @@ class User:
                     status_code=404, detail="Conversation not found for user."
                 )
         return current_conv
+
+    async def set_user_soup(self) -> None:
+        self.soup_ingredients = []
+        self.overall_mtbi = ""
+        self.soup_name = None
+
+        overall_mtbi_scores = {k: 0 for k in mtbi_types.keys()}
+
+        for conv_id in self.conversations:
+            if not self.conversations[conv_id].conv_done:
+                raise HTTPException(
+                    status_code=400,
+                    detail="Cannot start soup process without all conversations having been wrapped up.",
+                )
+            self.soup_ingredients.append(self.conversations[conv_id].ingredient)
+            bias_letter = mtbi_types_to_letters[self.conversations[conv_id].mtbi]
+            for score_region in overall_mtbi_scores:
+                if bias_letter in score_region:
+                    overall_mtbi_scores[score_region] += (
+                        -1 if score_region.index(bias_letter) == 0 else 1
+                    )
+                    break
+
+        for score_region in overall_mtbi_scores:
+            if overall_mtbi_scores[score_region] > 0:
+                self.overall_mtbi += score_region[0]
+            elif overall_mtbi_scores[score_region] < 0:
+                self.overall_mtbi += score_region[1]
+            else:
+                self.overall_mtbi += random.choice(score_region)
+
+        da_soup_score = self._get_soup_score_tm()
+        self.soup_name = da_soup_score["soup_type"]
+        self.soup_ingredients = da_soup_score["used_ingredients"]
