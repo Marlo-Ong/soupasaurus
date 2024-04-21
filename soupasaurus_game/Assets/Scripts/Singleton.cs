@@ -39,13 +39,13 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                 DontDestroyOnLoad(gameObject);
             }
         }
-        else if (this == s_instance) 
-        { 
-        } 
-        else
-        {
-            Debug.LogWarning($"Duplicate Singleton instantiated attached to GameObject: {gameObject.name}! Destroying.", gameObject);
-            Destroy(this);
-        }
+        // else if (this == s_instance) 
+        // { 
+        // } 
+        // else
+        // {
+        //     Debug.LogWarning($"Duplicate Singleton instantiated attached to GameObject: {gameObject.name}! Destroying.", gameObject);
+        //     Destroy(this);
+        // }
     }
 }

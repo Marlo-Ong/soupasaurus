@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public enum State
 {
@@ -21,7 +22,7 @@ public class StateMachine : Singleton<StateMachine>
 
     void Start()
     {
-        StateEnter(State.Questing);
+        StateEnter(State.Title);
     }
 
     public void StateChange(State s)
@@ -39,7 +40,6 @@ public class StateMachine : Singleton<StateMachine>
             case State.StartCutscene:
                 break;
             case State.Title:
-                WebLoader.Instance.GetUserID();
                 break;
             case State.Menu:
                 break;
@@ -66,5 +66,11 @@ public class StateMachine : Singleton<StateMachine>
         }
 
         OnStateExit?.Invoke(s);
+    }
+
+    public void StartCooking()
+    {
+        SceneManager.LoadSceneAsync(1);
+        StateChange(State.Questing);
     }
 }

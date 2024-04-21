@@ -19,9 +19,11 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
     public GameObject Ground;
     public GameObject Panel_AISpeechBubble;
     public GameObject Panel_SpeechLoadingDots;
+    public GameObject Panel_Banner;
     public List<Button> SceneButtons;
     public TMP_Text Text_Option1;
     public TMP_Text Text_Option2;
+    public TMP_Text Text_DinoName;
 
     [Header("Level Information")]
     public List<BiomeData> Biomes;
@@ -98,6 +100,7 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
         // Set speech bubble text
         Panel_SpeechLoadingDots.SetActive(false);
         Panel_AISpeechBubble.GetComponentInChildren<TMP_Text>().text = c.response;
+        Text_DinoName.text = c.character_name;
 
         if (c.done)
         {
@@ -131,11 +134,14 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
     {
         // Close loading screen
         Panel_Loading.SetActive(false);
+        Panel_Banner.SetActive(true);
         yield return new WaitForSeconds(Timing_Delay_AfterLoad);
 
         // Animate AI speech bubble
         Panel_AISpeechBubble.SetActive(true);
         yield return new WaitForSeconds(Timing_Duration_BeforeGroundRaise);
+        
+        Panel_Banner.SetActive(false);
 
         // Animate ground going up
         float duration = 0;
