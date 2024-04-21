@@ -50,6 +50,7 @@ public class StateMachine : Singleton<StateMachine>
                 QuestSceneManager.Instance.InitializeScene();
                 break;
             case State.Fin:
+                StartCoroutine(StartSoupScene());
                 break;
             case State.Friends:
                 break;
@@ -78,12 +79,22 @@ public class StateMachine : Singleton<StateMachine>
     public void StartCooking()
     {
         GameObject.Find("Canvas").SetActive(false);
+        GameObject.Find("Selection").SetActive(true);
     }
 
     public void ChooseGameplayLength(int rounds)
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadScene(1);
         NumRounds = rounds;
-        StateChange(State.Questing);
+        StateChange(State.StartCutscene);
+    }
+
+    IEnumerator StartSoupScene()
+    {
+        AsyncOperation job = SceneManager.LoadSceneAsync(3);
+        while (!job.isDone)
+        {
+            yield return null;
+        }
     }
 }

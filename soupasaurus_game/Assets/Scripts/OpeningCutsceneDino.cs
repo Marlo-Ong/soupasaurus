@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OpeningCutsceneDino : MonoBehaviour
 {
@@ -42,13 +43,19 @@ public class OpeningCutsceneDino : MonoBehaviour
         flip();
         for(int i = 0; i < 10; i++) {
             moveForward();
-            speed = 820;
+            speed = 82;
             //speed = 100;
             yield return new WaitForSeconds(1.0f);
         }
 
         yield return new WaitForSeconds(1.0f);
-        
+
+        AsyncOperation job = SceneManager.LoadSceneAsync(2);
+        while (!job.isDone)
+        {
+            yield return null;
+        }
+        StateMachine.Instance.StateChange(State.Questing);
     }
 
     IEnumerator waiting() {

@@ -19,7 +19,7 @@ public class SoupObject
 {
     public string user_id;
     public string[] ingredients;
-    public string mbti;
+    public string mtbi;
     public string soup_name;
 }
 
@@ -203,7 +203,7 @@ public class WebLoader : Singleton<WebLoader>
         }
 
         // Construct the URI with the score
-        string uri = $"{URI}/soup/user_id={UserID}";
+        string uri = $"{URI}/soup/{UserID}";
 
         // Create the UnityWebRequest
         using UnityWebRequest uwr = UnityWebRequest.Get(uri);

@@ -19,7 +19,6 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
     public GameObject Ground;
     public GameObject Panel_AISpeechBubble;
     public GameObject Panel_SpeechLoadingDots;
-    public GameObject Panel_Banner;
     public List<Button> SceneButtons;
     public TMP_Text Text_Option1;
     public TMP_Text Text_Option2;
@@ -47,19 +46,17 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
 
     void Start()
     {
-        _originalGroundPosition = Ground.transform.localPosition;
         WebLoader.OnInitialMessage += WebLoader_OnInitialMessage;
         WebLoader.OnSubsequentMessage += WebLoader_OnSubsequentMessage;
         WebLoader.OnNewOptionsGot += WebLoader_OnNewOptionsGot;
         WebLoader.OnUserIDGot += WebLoader_OnUserIDGot;
+        StateMachine.Instance.StateChange(State.Questing);
     }
 
     public void InitializeScene()
     {
         Debug.Log("Initialized quest scene manager");
-        // Change scene
-        //SceneManager.LoadSceneAsync(1);
-        //StateMachine.Instance.StateChange(State.Questing);
+        _originalGroundPosition = Ground.transform.localPosition;
 
         // Initialize Gemini handshake
         WebLoader.Instance.GetUserID();
@@ -136,14 +133,11 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
     {
         // Close loading screen
         Panel_Loading.SetActive(false);
-        Panel_Banner.SetActive(true);
         yield return new WaitForSeconds(Timing_Delay_AfterLoad);
 
         // Animate AI speech bubble
         Panel_AISpeechBubble.SetActive(true);
         yield return new WaitForSeconds(Timing_Duration_BeforeGroundRaise);
-        
-        Panel_Banner.SetActive(false);
 
         // Animate ground going up
         float duration = 0;

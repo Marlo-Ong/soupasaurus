@@ -8,12 +8,13 @@ public class SoupUpdater : MonoBehaviour
 {
     public TMP_Text IngredientList;
     public TMP_Text SoupName;
-    public TMP_Text MBTIDescription;
-    public Dictionary<string, string> MBTIDescriptions;
+    public TMP_Text MTBIDescription;
+    public Dictionary<string, string> MTBIDescriptions;
+    public GameObject Panel_Loading;
 
     void Start()
     {
-        MBTIDescriptions = new()
+        MTBIDescriptions = new()
         {
             { "ISTJ", "Responsible, organized, traditional, and methodical. They value stability and order." },
             { "ISFJ", "Compassionate, conscientious, and meticulous. They prioritize harmony and helping others." },
@@ -40,8 +41,9 @@ public class SoupUpdater : MonoBehaviour
 
     void WebLoader_OnGetSoup(SoupObject s)
     {
-        SoupName.text = s.soup_name + $" ({s.mbti})";
-        MBTIDescription.text = MBTIDescriptions[s.mbti];
+        Panel_Loading.SetActive(false);
+        SoupName.text = s.soup_name;
+        MTBIDescription.text = $"{s.mtbi}: " + MTBIDescriptions[s.mtbi];
         string t = "";
         foreach (string ing in s.ingredients)
         {
@@ -52,6 +54,6 @@ public class SoupUpdater : MonoBehaviour
 
     public void NextScene()
     {
-        SceneManager.LoadSceneAsync(4);
+        SceneManager.LoadScene(4);
     }
 }

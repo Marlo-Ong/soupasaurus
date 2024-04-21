@@ -1119,7 +1119,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!224 &786269581
 RectTransform:
@@ -2714,6 +2714,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentState: 0
   NumRounds: 0
+  NamesOfDinosMet: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

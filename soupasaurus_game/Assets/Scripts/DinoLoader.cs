@@ -20,6 +20,5 @@ public class DinoLoader : Singleton<DinoLoader>
     private void WebLoader_OnMessagePosted(ConvoObject c)
     {
         OtherDinoSpriteR.sprite = dinoSprites[dinoNames.IndexOf(c.character_name)];
-        GetComponent<AnimationController>().Play();
     }
 }

@@ -275,6 +275,92 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &217370846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 217370848}
+  - component: {fileID: 217370847}
+  m_Layer: 0
+  m_Name: DinoLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &217370847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217370846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123736a190b074229a21bb272b3effb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dinoNames:
+  - Abnormally Large Bird
+  - Flower Brontosaurus
+  - Cinnamunchsaurus
+  - Count Dinovamp
+  - Dinodoor
+  - Dinomore
+  - Dinosoar
+  - Jellyjelly
+  - Lippysaurus
+  - Megladon
+  - Pastasaurus
+  - Sherlock-saurus
+  - Spiderlily-saurus
+  - T-Wrecks
+  - Terrordactyl
+  - Tricycleteratops
+  - Velocityraptor
+  - Vinylsaur
+  - Winosaur
+  dinoSprites:
+  - {fileID: -5419690018834563517, guid: 1008ab8aa5db3463d91ae222ea4d4159, type: 3}
+  - {fileID: 5268555768060470767, guid: c1666c08e3b3f4513a2dc8ce30bf377a, type: 3}
+  - {fileID: -7402311875193809838, guid: 9b97f2bdb50b2450b95e22556e009e48, type: 3}
+  - {fileID: 6795801058091399837, guid: ceab7d7b29f2342dfa7aa84c5a5a880a, type: 3}
+  - {fileID: 7735239307877574490, guid: 7d391fe7c31174416b3f5aff3026f87a, type: 3}
+  - {fileID: 7390703848661599155, guid: 519f714f2456a4fa6bdbd48b232ff8b6, type: 3}
+  - {fileID: 3398191391438066125, guid: 1e4337c73f50649128df4b621b35a4d6, type: 3}
+  - {fileID: 5868939859092394483, guid: e00c34dd37bf848b0b99da60f316b5f3, type: 3}
+  - {fileID: -5497378670649944087, guid: 2f9a687340acd455cad674ccf7d6c02e, type: 3}
+  - {fileID: 7630161489650183876, guid: 6619d3880e55042d9a9506aa5e6518ad, type: 3}
+  - {fileID: -125550873265458564, guid: 221b1c9cea42d45c99674394333e7e79, type: 3}
+  - {fileID: 6053919790626924708, guid: f5cf9386b74c64929922eb1d53cbd925, type: 3}
+  - {fileID: -231250904800061007, guid: 2e0b5c94ee4784a609c5e6f5702878fc, type: 3}
+  - {fileID: 7667744028061042312, guid: 930e992692d674305a60356d241844d1, type: 3}
+  - {fileID: 8317175330310204082, guid: 2ac6a5ba4d1f24607b8b9fd22a6538b3, type: 3}
+  - {fileID: 6428272639043824107, guid: e471069cf5f5e46479b30e5e8da3382d, type: 3}
+  - {fileID: -5393597298639458365, guid: e0da4b4e1dc4a4e01a2b573207cb88f2, type: 3}
+  - {fileID: -1232535546836218199, guid: 03788a45af6d54cc490599141093efc0, type: 3}
+  - {fileID: -3318228808182651714, guid: 434f780ca551c4b3e8c821f7d197a7c0, type: 3}
+  OtherDinoSpriteR: {fileID: 7738981729438959603}
+  DinoFriends: []
+--- !u!4 &217370848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217370846}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.3889619, y: -3.6127994, z: -0.20516427}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &304639827
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,9 +392,10 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1201287177}
-  - {fileID: 1523161457}
   - {fileID: 318791927}
+  - {fileID: 1523161457}
   - {fileID: 480982278}
+  - {fileID: 1742970902}
   m_Father: {fileID: 140518467}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -416,7 +503,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Abnormally Large Bird
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7ca9a000b7c2f430496af14f740d2150, type: 2}
   m_sharedMaterial: {fileID: 3259712093742295032, guid: 7ca9a000b7c2f430496af14f740d2150, type: 2}
@@ -443,7 +530,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14.8
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -786,7 +873,6 @@ RectTransform:
   m_Children:
   - {fileID: 1961812455}
   - {fileID: 140518467}
-  - {fileID: 1742970902}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1252,7 +1338,6 @@ MonoBehaviour:
   Ground: {fileID: 304639827}
   Panel_AISpeechBubble: {fileID: 8331779583839294706}
   Panel_SpeechLoadingDots: {fileID: 167896311}
-  Panel_Banner: {fileID: 1742970901}
   SceneButtons:
   - {fileID: 2891207616696780201}
   - {fileID: 1958924322}
@@ -1821,7 +1906,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1742970902
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1829,17 +1914,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1742970901}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 330108045}
-  m_Father: {fileID: 786269581}
+  m_Father: {fileID: 304639828}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -150}
+  m_AnchoredPosition: {x: 0.00024414062, y: 980.0447}
   m_SizeDelta: {x: 175, y: 26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1742970903
@@ -2317,6 +2402,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c09f767335374c74a607a67a7ec0457, type: 3}
+--- !u!212 &7738981729438959603 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4508383046964043666, guid: 4c09f767335374c74a607a67a7ec0457, type: 3}
+  m_PrefabInstance: {fileID: 7738981729438959602}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8331779583839294706 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 487822666267486988, guid: 4c09f767335374c74a607a67a7ec0457, type: 3}
@@ -2332,3 +2422,4 @@ SceneRoots:
   - {fileID: 2100456339}
   - {fileID: 1349191995}
   - {fileID: 1272068863}
+  - {fileID: 217370848}
