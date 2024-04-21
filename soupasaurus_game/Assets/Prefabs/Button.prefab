@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: i am a button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 289def9b23f5a4b999dbd3f6c56cf82f, type: 2}
-  m_sharedMaterial: {fileID: 7498876088401740954, guid: 289def9b23f5a4b999dbd3f6c56cf82f, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7ca9a000b7c2f430496af14f740d2150, type: 2}
+  m_sharedMaterial: {fileID: 3259712093742295032, guid: 7ca9a000b7c2f430496af14f740d2150, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 164
+  m_fontSize: 187.2
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 37.927155, y: 31.60614, z: 63.211914, w: 18.963585}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 1195350260985975788}
   - component: {fileID: 6751324729799601910}
   m_Layer: 0
-  m_Name: OptionButton
+  m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -203,8 +203,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: -8765359111740580193, guid: f1bc8de443f544539bad32264576af77, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

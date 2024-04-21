@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using TMPro;
+using UnityEngine.Events;
 
 [Serializable]
 public class OptionsObject
@@ -31,49 +33,30 @@ public class ConvoObject
 
 public class WebLoader : Singleton<WebLoader>
 {
+    public TMP_Text AIText;
     public string UserID;
     public string ConversationID;
-    public string URI = "http://dell-wsl.mango-tone.ts.net:8000";
-    //public string URI = "localhost:8000";
+    public string URI = "https://ml-1-wsl.mango-tone.ts.net";
+    public static event UnityAction<ConvoObject> OnMessagePosted;
+    public static event UnityAction<string[]> OnNewOptionsGot;
+    public static event UnityAction<string> OnUserIDGot;
 
-    void Start()
+    public void GetUserID()
     {
-        Debug.Log("Start");
-        StartCoroutine(GetUserID());
+        StartCoroutine(ContinueGetUserID());
     }
 
-    IEnumerator PostNewMessage(string user_id = null, string convo_id = null)
+    public void PostNewMessage()
     {
-        Debug.Log("Start PostNewMessage");
-        if (user_id == null)
-        {
-            Debug.LogWarning("No user ID found when trying to POST /conversation");
-            yield break;
-        }
-
-        string uri;
-        if (convo_id == null) uri = $"{URI}/conversation?user_id={user_id}";
-        else uri = $"{URI}/conversation?user_id={user_id}&conversation_id={convo_id}";
-
-        // Create the UnityWebRequest
-        using UnityWebRequest uwr = UnityWebRequest.Post(uri, new WWWForm());
-
-        // Send the request and wait for it to complete
-        yield return uwr.SendWebRequest();
-
-        if (uwr.result == UnityWebRequest.Result.ConnectionError)
-        {
-            Debug.LogWarning("Error: " + uwr.error);
-        }
-        else
-        {
-            ConvoObject c = JsonUtility.FromJson<ConvoObject>(uwr.downloadHandler.text);
-            ConversationID = c.convo_id;
-            Debug.Log($"CONVO ID: {c.convo_id} / NAME: {c.character_name} / RESPONSE: {c.response}");
-        }
+        StartCoroutine(ContinuePostNewMessage());
     }
 
-    IEnumerator GetUserID()
+    public void GetNewOptions()
+    {
+        StartCoroutine(ContinueGetNewOptions());
+    }
+
+    IEnumerator ContinueGetUserID()
     {
         Debug.Log("Start GetUserID");
         // Construct the URI with the score
@@ -92,23 +75,55 @@ public class WebLoader : Singleton<WebLoader>
         else
         {
             UserIDObject c = JsonUtility.FromJson<UserIDObject>(uwr.downloadHandler.text);
-            Debug.Log($"USER ID: {c.user_id}");
+            Debug.Log($"USER ID: {c.user_id} / text: {uwr.downloadHandler.text} / url: {uri}");
             UserID = c.user_id;
-            //StartCoroutine(GetConvoID());
-            StartCoroutine(PostNewMessage(UserID));
+            OnUserIDGot?.Invoke(c.user_id);
         }
     }
 
-    IEnumerator GetNewOptions(string user_id = null, string conversation_id = null)
+    IEnumerator ContinuePostNewMessage()
     {
-        if (user_id == null || conversation_id == null)
+        Debug.Log("Start PostNewMessage");
+        if (UserID == null)
+        {
+            Debug.LogWarning("No user ID found when trying to POST /conversation");
+            yield break;
+        }
+
+        string uri;
+        if (ConversationID == null) uri = $"{URI}/conversation?user_id={UserID}";
+        else uri = $"{URI}/conversation?user_id={UserID}&conversation_id={ConversationID}";
+
+        // Create the UnityWebRequest
+        using UnityWebRequest uwr = UnityWebRequest.Post(uri, new WWWForm());
+
+        // Send the request and wait for it to complete
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.ConnectionError)
+        {
+            Debug.LogWarning("Error: " + uwr.error);
+        }
+        else
+        {
+            ConvoObject c = JsonUtility.FromJson<ConvoObject>(uwr.downloadHandler.text);
+            ConversationID = c.convo_id;
+            Debug.Log(uwr.downloadHandler.text);
+            AIText.text = c.response;
+            OnMessagePosted?.Invoke(c);
+        }
+    }
+
+    IEnumerator ContinueGetNewOptions()
+    {
+        if (UserID == null || ConversationID == null)
         {
             Debug.LogWarning("No user ID or convo ID found when trying to POST /new_options");
             yield break;
         }
 
         // Construct the URI with the score
-        string uri = $"{URI}/new_options?user_id={user_id}&conversation_id={conversation_id}";
+        string uri = $"{URI}/new_options?user_id={UserID}&conversation_id={ConversationID}";
 
         // Create the UnityWebRequest
         using UnityWebRequest uwr = UnityWebRequest.Get(uri);
@@ -123,9 +138,8 @@ public class WebLoader : Singleton<WebLoader>
         else
         {
             OptionsObject c = JsonUtility.FromJson<OptionsObject>(uwr.downloadHandler.text);
-            Debug.Log($"CONVO ID: {c.convo_id}");
+            Debug.Log(uwr.downloadHandler.text);
             ConversationID = c.convo_id;
-            StartCoroutine(PostNewMessage(UserID, ConversationID));
         }
     }
 }

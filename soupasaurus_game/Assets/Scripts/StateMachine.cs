@@ -8,7 +8,9 @@ public enum State
     StartCutscene,
     Title,
     Menu,
-    Questing
+    Questing,
+    AwaitAI,
+    AwaitResponse
 }
 
 public class StateMachine : Singleton<StateMachine>
@@ -19,7 +21,7 @@ public class StateMachine : Singleton<StateMachine>
 
     void Start()
     {
-        StateEnter(State.Title);
+        StateEnter(State.Questing);
     }
 
     public void StateChange(State s)
@@ -37,10 +39,12 @@ public class StateMachine : Singleton<StateMachine>
             case State.StartCutscene:
                 break;
             case State.Title:
+                WebLoader.Instance.GetUserID();
                 break;
             case State.Menu:
                 break;
             case State.Questing:
+                
                 break;
         }
 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 88bd729fbe9054624ac5cc824cd73e5d
+guid: fd53860970cbb4b05afbdbd22760d55f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8516519808755975808
-    second: mc-dino-2-32bit_0
+      213: 5559370947737423570
+    second: reload-button-32bit_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mc-dino-2-32bit_0
+      name: reload-button-32bit_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 29
-        height: 32
+        x: 1
+        y: 2
+        width: 31
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 089b58c3b5e3fc980800000000000000
-      internalID: -8516519808755975808
+      spriteID: 2de04821c6ad62d40800000000000000
+      internalID: 5559370947737423570
       vertices: []
       indices: 
       edges: []
@@ -144,7 +144,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      mc-dino-2-32bit_0: -8516519808755975808
+      reload-button-32bit_0: 5559370947737423570
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

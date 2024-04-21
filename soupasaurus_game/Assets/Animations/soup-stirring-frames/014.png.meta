@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 88bd729fbe9054624ac5cc824cd73e5d
+guid: 926b8df565925496b872f1b024b9bb57
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8516519808755975808
-    second: mc-dino-2-32bit_0
+      213: 1162813617717342589
+    second: 014_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mc-dino-2-32bit_0
+      name: 014_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 29
-        height: 32
+        y: 2
+        width: 32
+        height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 089b58c3b5e3fc980800000000000000
-      internalID: -8516519808755975808
+      spriteID: d71770013d4232010800000000000000
+      internalID: 1162813617717342589
       vertices: []
       indices: 
       edges: []
@@ -143,8 +143,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      mc-dino-2-32bit_0: -8516519808755975808
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 88bd729fbe9054624ac5cc824cd73e5d
+guid: f1bc8de443f544539bad32264576af77
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8516519808755975808
-    second: mc-dino-2-32bit_0
+      213: -8765359111740580193
+    second: text-box-fillin-no-outline-32bit_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mc-dino-2-32bit_0
+      name: text-box-fillin-no-outline-32bit_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 29
-        height: 32
+        y: 5
+        width: 32
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +127,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 089b58c3b5e3fc980800000000000000
-      internalID: -8516519808755975808
+      spriteID: f9e18f724503b5680800000000000000
+      internalID: -8765359111740580193
       vertices: []
       indices: 
       edges: []
@@ -144,7 +144,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      mc-dino-2-32bit_0: -8516519808755975808
+      text-box-fillin-no-outline-32bit_0: -8765359111740580193
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

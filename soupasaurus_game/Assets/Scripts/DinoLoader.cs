@@ -2,9 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DinoLoader : MonoBehaviour
+public class DinoLoader : Singleton<DinoLoader>
 {
-    [SerializeField] public Dictionary<string, Sprite> dinos;
-    public int UserId;
-    public int ConversationId;
+    // Dictionary not serializable in inspector
+    public List<string> dinoNames;
+    public List<Sprite> dinoSprites;
+    public SpriteRenderer OtherDinoSpriteR;
+
+    
+    void OnEnable()
+    {
+        WebLoader.OnMessagePosted += WebLoader_OnMessagePosted;
+    }
+
+    private void WebLoader_OnMessagePosted(ConvoObject c)
+    {
+        OtherDinoSpriteR.sprite = dinoSprites[dinoNames.IndexOf(c.character_name)];
+        GetComponent<AnimationController>().Play();
+    }
 }
