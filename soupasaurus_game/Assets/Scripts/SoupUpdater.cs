@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SoupUpdater : MonoBehaviour
 {
-    public List<TMP_Text> IngredientContainers;
+    public TMP_Text IngredientList;
     public TMP_Text SoupName;
     public TMP_Text MBTIDescription;
     public Dictionary<string, string> MBTIDescriptions;
@@ -31,5 +32,26 @@ public class SoupUpdater : MonoBehaviour
             { "ENFJ", "Charismatic, empathetic, and diplomatic. They inspire and motivate others toward a common goal." },
             { "ENTJ", "Assertive, strategic, and ambitious. They are natural leaders who enjoy tackling challenges head-on." }
         };
+
+        WebLoader.OnGetSoup += WebLoader_OnGetSoup;
+        WebLoader.Instance.GetSoup();
+    }
+
+
+    void WebLoader_OnGetSoup(SoupObject s)
+    {
+        SoupName.text = s.soup_name + $" ({s.mbti})";
+        MBTIDescription.text = MBTIDescriptions[s.mbti];
+        string t = "";
+        foreach (string ing in s.ingredients)
+        {
+            t += ing + ", ";
+        }
+        IngredientList.text = t;
+    }
+
+    public void NextScene()
+    {
+        SceneManager.LoadSceneAsync(4);
     }
 }

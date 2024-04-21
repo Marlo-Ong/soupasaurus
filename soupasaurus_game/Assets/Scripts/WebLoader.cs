@@ -56,6 +56,11 @@ public class WebLoader : Singleton<WebLoader>
         StartCoroutine(ContinueGetUserID());
     }
 
+    public void GetSoup()
+    {
+        StartCoroutine(ContinueGetSoup());
+    }
+
     public void PostInitialMessage()
     {
         StartCoroutine(ContinuePostInitialMessage());
