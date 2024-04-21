@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OpeningCutsceneDino : MonoBehaviour
 {
-    public float speed = 120;
+    public float speed = 500;
     //GameObject dino;
     //SpriteRenderer dino = GameObject.Find("dino").GetComponent<SpriteRenderer>();
     //GameObject dialogue = GameObject.Find("Image");
@@ -29,7 +29,7 @@ public class OpeningCutsceneDino : MonoBehaviour
         dialogue1.SetActive(false);
 
         flip();
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 6; i++) {
             moveBackward();
             yield return new WaitForSeconds(1.0f);
         }
@@ -42,7 +42,8 @@ public class OpeningCutsceneDino : MonoBehaviour
         flip();
         for(int i = 0; i < 10; i++) {
             moveForward();
-            speed = 200;
+            speed = 820;
+            //speed = 100;
             yield return new WaitForSeconds(1.0f);
         }
 
@@ -63,6 +64,7 @@ public class OpeningCutsceneDino : MonoBehaviour
     // function for moving script forward a step
     void moveForward() {
         // Calculate the distance to move based on speed and time
+        //float distanceToMove = (float) speed;
         float distanceToMove = speed * Time.deltaTime;
 
         // Move the sprite forward (in the direction of its local forward vector)
@@ -72,6 +74,7 @@ public class OpeningCutsceneDino : MonoBehaviour
     void moveBackward() {
         // Calculate the distance to move based on speed and time
         float distanceToMove = speed * Time.deltaTime;
+        //float distanceToMove = (float) speed;
 
         // Move the sprite forward (in the direction of its local forward vector)
         transform.Translate(Vector2.left * distanceToMove);
