@@ -143,7 +143,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      exotic-root-veggie-32bit_0: -3557821499200457
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

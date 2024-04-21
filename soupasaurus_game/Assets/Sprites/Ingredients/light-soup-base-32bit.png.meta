@@ -215,7 +215,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      light-soup-base-32bit_0: -4234807579531240728
+      light-soup-base-32bit_1: 5389844015638439467
+      light-soup-base-32bit_2: -8509073623127722991
+      light-soup-base-32bit_3: 3195106531218775838
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
