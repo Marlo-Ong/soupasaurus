@@ -10,7 +10,7 @@ using UnityEngine.Events;
 public class OptionsObject
 {
     public string user_id;
-    public string convo_id;
+    public string conversation_id;
     public string[] options;
 }
 
@@ -24,7 +24,7 @@ public class UserIDObject
 public class ConvoObject
 {
     public string user_id;
-    public string convo_id;
+    public string conversation_id;
     public string character_name;
     public string response;
     public string[] options;
@@ -36,7 +36,8 @@ public class WebLoader : Singleton<WebLoader>
     public string UserID;
     public string ConversationID;
     public string URI = "https://ml-1-wsl.mango-tone.ts.net";
-    public static event UnityAction<ConvoObject, bool> OnMessagePosted;
+    public static event UnityAction<ConvoObject> OnInitialMessage;
+    public static event UnityAction<ConvoObject> OnSubsequentMessage;
     public static event UnityAction<string[]> OnNewOptionsGot;
     public static event UnityAction<string> OnUserIDGot;
 
@@ -45,9 +46,14 @@ public class WebLoader : Singleton<WebLoader>
         StartCoroutine(ContinueGetUserID());
     }
 
-    public void PostNewMessage()
+    public void PostInitialMessage()
     {
-        StartCoroutine(ContinuePostNewMessage());
+        StartCoroutine(ContinuePostInitialMessage());
+    }
+
+    public void PostSubsequentMessage(int i)
+    {
+        StartCoroutine(ContinuePostSubsequentMessage(i));
     }
 
     public void GetNewOptions()
@@ -78,13 +84,11 @@ public class WebLoader : Singleton<WebLoader>
             UserID = c.user_id;
             OnUserIDGot?.Invoke(c.user_id);
         }
-        PostNewMessage();
     }
 
-    IEnumerator ContinuePostNewMessage()
+    IEnumerator ContinuePostInitialMessage()
     {
-        Debug.Log("Start PostNewMessage");
-        bool isFirstMessage = false;
+        Debug.Log("Start PostInitialMessage");
 
         if (string.IsNullOrEmpty(UserID))
         {
@@ -93,12 +97,7 @@ public class WebLoader : Singleton<WebLoader>
         }
 
         string uri;
-        if (string.IsNullOrEmpty(ConversationID))
-        {
-            uri = $"{URI}/conversation?user_id={UserID}";
-            isFirstMessage = true;
-        }
-        else uri = $"{URI}/conversation?user_id={UserID}&conversation_id={ConversationID}";
+        uri = $"{URI}/conversation?user_id={UserID}";
 
         // Create the UnityWebRequest
         using UnityWebRequest uwr = UnityWebRequest.Post(uri, new WWWForm());
@@ -113,9 +112,10 @@ public class WebLoader : Singleton<WebLoader>
         else
         {
             ConvoObject c = JsonUtility.FromJson<ConvoObject>(uwr.downloadHandler.text);
-            ConversationID = c.convo_id;
-            Debug.Log($"URI: {uri}, first: {isFirstMessage}");
-            OnMessagePosted?.Invoke(c, isFirstMessage);
+            ConversationID = c.conversation_id;
+            Debug.Log("Successfully posted initial message.");
+            Debug.Log($"Unpacked JSON: {c.conversation_id}, {c.response} / Given JSON: {uwr.downloadHandler.text}");
+            OnInitialMessage?.Invoke(c);
         }
     }
 
@@ -143,8 +143,39 @@ public class WebLoader : Singleton<WebLoader>
         else
         {
             OptionsObject c = JsonUtility.FromJson<OptionsObject>(uwr.downloadHandler.text);
-            Debug.Log(uwr.downloadHandler.text);
-            ConversationID = c.convo_id;
+            Debug.Log($"Successfully got new options: {c.options[0]} / {c.options[1]}");
+            OnNewOptionsGot?.Invoke(c.options);
+        }
+    }
+
+    IEnumerator ContinuePostSubsequentMessage(int selectedOptionIndex)
+    {
+        Debug.Log("Start PostSubsequentMessage");
+
+        if (string.IsNullOrEmpty(UserID) || string.IsNullOrEmpty(ConversationID))
+        {
+            Debug.LogWarning("No user ID or convo ID found when trying to POST /conversation");
+            yield break;
+        }
+
+        string uri;
+        uri = $"{URI}/conversation?user_id={UserID}&conversation_id={ConversationID}&selected_option_index={selectedOptionIndex}";
+
+        // Create the UnityWebRequest
+        using UnityWebRequest uwr = UnityWebRequest.Post(uri, new WWWForm());
+
+        // Send the request and wait for it to complete
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.ConnectionError)
+        {
+            Debug.LogWarning("Error: " + uwr.error);
+        }
+        else
+        {
+            ConvoObject c = JsonUtility.FromJson<ConvoObject>(uwr.downloadHandler.text);
+            Debug.Log($"Successfully posted subsequent message.");
+            OnSubsequentMessage?.Invoke(c);
         }
     }
 }

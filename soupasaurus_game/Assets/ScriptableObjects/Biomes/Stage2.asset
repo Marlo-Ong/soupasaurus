@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed277d9dee26f4eb780081a4a585bce5, type: 3}
+  m_Name: Stage2
+  m_EditorClassIdentifier: 
+  Name: Simmering Sunset
+  Floor: {fileID: -813503637306195947, guid: b57dfdf4860ce46d9a9e90bd40b2e684, type: 3}
+  Background: {fileID: -4896849438614101653, guid: be365e4053c5f4b26b9855668291dac3, type: 3}

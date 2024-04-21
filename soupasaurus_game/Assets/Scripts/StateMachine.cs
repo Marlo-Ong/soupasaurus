@@ -9,8 +9,8 @@ public enum State
     Title,
     Menu,
     Questing,
-    AwaitAI,
-    AwaitResponse
+    End,
+    Soup
 }
 
 public class StateMachine : Singleton<StateMachine>

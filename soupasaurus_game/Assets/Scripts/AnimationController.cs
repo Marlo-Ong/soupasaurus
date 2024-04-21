@@ -12,9 +12,14 @@ public enum IdleAnimationType
 public class AnimationController : MonoBehaviour
 {
     public IdleAnimationType AnimType;
-    public AnimationCurve AnimCurve;
+
+    [Header("Flip-Through")]
     public List<Sprite> FlipThroughSprites;
     public float FramesPerSecond = 1;
+
+    [Header("Up-Down")]
+    public float Y_Offset;
+    
     public bool IsLooped;
     public bool PlaysOnStart;
     private Image _imageToAnimate;
@@ -25,7 +30,7 @@ public class AnimationController : MonoBehaviour
 
     void OnEnable()
     {
-        _updownOffset = new Vector3(0,10,0);
+        _updownOffset = new Vector3(0,Y_Offset,0);
         _startingPosition = transform.position;
 
         if (TryGetComponent(out Image i))
@@ -59,11 +64,10 @@ public class AnimationController : MonoBehaviour
         switch (AnimType)
         {
             case IdleAnimationType.UpDown:
-                //transform.Translate(_updownOffset);
-                //Debug.Log($"Up (T, LocalT): {transform.position}, {transform.localPosition}");
+                transform.localPosition = transform.localPosition + _updownOffset;
                 yield return new WaitForSeconds(1/FramesPerSecond);
-                //transform.Translate(-_updownOffset);
-                //Debug.Log($"Down (T, LocalT): {transform.position}, {transform.localPosition}");
+                transform.localPosition = transform.localPosition - _updownOffset;
+                yield return new WaitForSeconds(1/FramesPerSecond);
                 break;
 
             case IdleAnimationType.FlipThrough:

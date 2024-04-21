@@ -12,10 +12,10 @@ public class DinoLoader : Singleton<DinoLoader>
     
     void OnEnable()
     {
-        WebLoader.OnMessagePosted += WebLoader_OnMessagePosted;
+        WebLoader.OnInitialMessage += WebLoader_OnMessagePosted;
     }
 
-    private void WebLoader_OnMessagePosted(ConvoObject c, bool _)
+    private void WebLoader_OnMessagePosted(ConvoObject c)
     {
         OtherDinoSpriteR.sprite = dinoSprites[dinoNames.IndexOf(c.character_name)];
         GetComponent<AnimationController>().Play();

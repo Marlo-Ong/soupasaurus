@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed277d9dee26f4eb780081a4a585bce5, type: 3}
+  m_Name: Stage1
+  m_EditorClassIdentifier: 
+  Name: Blue Bisque
+  Floor: {fileID: 1859961692390110156, guid: 750be498ef91447dd86e1c792630999c, type: 3}
+  Background: {fileID: -5979652621793352480, guid: 797f588921d074c7fae037db284f6193, type: 3}
