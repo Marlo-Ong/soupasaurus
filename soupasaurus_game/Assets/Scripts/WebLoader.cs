@@ -33,11 +33,10 @@ public class ConvoObject
 
 public class WebLoader : Singleton<WebLoader>
 {
-    public TMP_Text AIText;
     public string UserID;
     public string ConversationID;
     public string URI = "https://ml-1-wsl.mango-tone.ts.net";
-    public static event UnityAction<ConvoObject> OnMessagePosted;
+    public static event UnityAction<ConvoObject, bool> OnMessagePosted;
     public static event UnityAction<string[]> OnNewOptionsGot;
     public static event UnityAction<string> OnUserIDGot;
 
@@ -79,19 +78,26 @@ public class WebLoader : Singleton<WebLoader>
             UserID = c.user_id;
             OnUserIDGot?.Invoke(c.user_id);
         }
+        PostNewMessage();
     }
 
     IEnumerator ContinuePostNewMessage()
     {
         Debug.Log("Start PostNewMessage");
-        if (UserID == null)
+        bool isFirstMessage = false;
+
+        if (string.IsNullOrEmpty(UserID))
         {
             Debug.LogWarning("No user ID found when trying to POST /conversation");
             yield break;
         }
 
         string uri;
-        if (ConversationID == null) uri = $"{URI}/conversation?user_id={UserID}";
+        if (string.IsNullOrEmpty(ConversationID))
+        {
+            uri = $"{URI}/conversation?user_id={UserID}";
+            isFirstMessage = true;
+        }
         else uri = $"{URI}/conversation?user_id={UserID}&conversation_id={ConversationID}";
 
         // Create the UnityWebRequest
@@ -108,15 +114,14 @@ public class WebLoader : Singleton<WebLoader>
         {
             ConvoObject c = JsonUtility.FromJson<ConvoObject>(uwr.downloadHandler.text);
             ConversationID = c.convo_id;
-            Debug.Log(uwr.downloadHandler.text);
-            AIText.text = c.response;
-            OnMessagePosted?.Invoke(c);
+            Debug.Log($"URI: {uri}, first: {isFirstMessage}");
+            OnMessagePosted?.Invoke(c, isFirstMessage);
         }
     }
 
     IEnumerator ContinueGetNewOptions()
     {
-        if (UserID == null || ConversationID == null)
+        if (string.IsNullOrEmpty(UserID) || string.IsNullOrEmpty(ConversationID))
         {
             Debug.LogWarning("No user ID or convo ID found when trying to POST /new_options");
             yield break;

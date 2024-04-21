@@ -5,8 +5,11 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 8749fe3bc92d54140bc371d8abd9508f
+  - enabled: 1
+    path: Assets/Scenes/Questing.unity
+    guid: 7b015ce86f8fe48f5a08d1f7392d4473
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

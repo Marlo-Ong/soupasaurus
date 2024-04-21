@@ -44,7 +44,7 @@ public class StateMachine : Singleton<StateMachine>
             case State.Menu:
                 break;
             case State.Questing:
-                
+                QuestSceneManager.Instance.InitializeScene();
                 break;
         }
 

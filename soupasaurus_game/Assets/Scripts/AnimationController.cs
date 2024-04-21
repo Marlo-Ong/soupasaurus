@@ -14,16 +14,19 @@ public class AnimationController : MonoBehaviour
     public IdleAnimationType AnimType;
     public AnimationCurve AnimCurve;
     public List<Sprite> FlipThroughSprites;
-    public int FramesPerSecond = 1;
+    public float FramesPerSecond = 1;
     public bool IsLooped;
     public bool PlaysOnStart;
     private Image _imageToAnimate;
     private SpriteRenderer _rendererToAnimate;
     private Vector3 _updownOffset;
+    private Vector3 _startingPosition;
+    private Coroutine _animationCoroutine;
 
     void OnEnable()
     {
         _updownOffset = new Vector3(0,10,0);
+        _startingPosition = transform.position;
 
         if (TryGetComponent(out Image i))
         {
@@ -42,7 +45,13 @@ public class AnimationController : MonoBehaviour
 
     public void Play()
     {
-        StartCoroutine(PlayAnimation());
+        _animationCoroutine = StartCoroutine(PlayAnimation());
+    }
+
+    public void Stop()
+    {
+        if (_animationCoroutine != null) StopCoroutine(_animationCoroutine);
+        transform.position = _startingPosition;
     }
 
     IEnumerator PlayAnimation()
@@ -50,11 +59,11 @@ public class AnimationController : MonoBehaviour
         switch (AnimType)
         {
             case IdleAnimationType.UpDown:
-                transform.localPosition += _updownOffset;
-                Debug.Log($"Up (T, LocalT): {transform.position}, {transform.localPosition}");
+                //transform.Translate(_updownOffset);
+                //Debug.Log($"Up (T, LocalT): {transform.position}, {transform.localPosition}");
                 yield return new WaitForSeconds(1/FramesPerSecond);
-                transform.localPosition -= _updownOffset;
-                Debug.Log($"Down (T, LocalT): {transform.position}, {transform.localPosition}");
+                //transform.Translate(-_updownOffset);
+                //Debug.Log($"Down (T, LocalT): {transform.position}, {transform.localPosition}");
                 break;
 
             case IdleAnimationType.FlipThrough:
