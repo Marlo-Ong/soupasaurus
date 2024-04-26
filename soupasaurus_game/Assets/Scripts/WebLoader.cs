@@ -44,7 +44,7 @@ public class WebLoader : Singleton<WebLoader>
 {
     public string UserID;
     public string ConversationID;
-    public string URI = "https://ml-1-wsl.mango-tone.ts.net";
+    public string URI;
     public static event UnityAction<ConvoObject> OnInitialMessage;
     public static event UnityAction<ConvoObject> OnSubsequentMessage;
     public static event UnityAction<string[]> OnNewOptionsGot;

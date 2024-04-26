@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 760816091}
   - component: {fileID: 760816094}
   - component: {fileID: 760816093}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Dialogue2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,7 +414,7 @@ GameObject:
   - component: {fileID: 831316313}
   - component: {fileID: 831316315}
   - component: {fileID: 831316314}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -718,7 +718,7 @@ GameObject:
   - component: {fileID: 1223251211}
   - component: {fileID: 1223251213}
   - component: {fileID: 1223251212}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -959,7 +959,7 @@ GameObject:
   - component: {fileID: 1797736350}
   - component: {fileID: 1797736352}
   - component: {fileID: 1797736351}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Dialogue1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

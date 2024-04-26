@@ -21,11 +21,18 @@ public class StateMachine : Singleton<StateMachine>
     public State CurrentState;
     public int NumRounds;
     public List<string> NamesOfDinosMet;
+    public GameObject ErrorCanvas;
 
     void Start()
     {
         NamesOfDinosMet = new();
         StateEnter(State.Title);
+    }
+
+    void Update()
+    {
+        bool isLandscape = Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight;
+        ErrorCanvas.SetActive(!isLandscape);
     }
 
     public void StateChange(State s)

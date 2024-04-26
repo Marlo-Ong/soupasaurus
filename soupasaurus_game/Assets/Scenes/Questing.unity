@@ -1427,7 +1427,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UserID: 
   ConversationID: 
-  URI: https://ml-1-wsl.mango-tone.ts.net
+  URI: https://soup.mango-tone.ts.net
 --- !u!4 &1349191995
 Transform:
   m_ObjectHideFlags: 0
