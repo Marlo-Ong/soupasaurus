@@ -13,6 +13,7 @@ public class OpeningCutsceneDino : MonoBehaviour
     //SpriteRenderer dialogue = GameObject.Find("image").GetComponent<SpriteRenderer>();
     GameObject dialogue1;
     GameObject dialogue2;
+    private Coroutine EndingScene;
 
     // Start is called before the first frame update
     void Start()
@@ -48,13 +49,7 @@ public class OpeningCutsceneDino : MonoBehaviour
         }
 
         yield return new WaitForSeconds(STEP_TIME);
-
-        AsyncOperation job = SceneManager.LoadSceneAsync(2);
-        while (!job.isDone)
-        {
-            yield return null;
-        }
-        StateMachine.Instance.StateChange(State.Questing);
+        EndScene();
     }
 
     IEnumerator waiting() {
@@ -89,5 +84,21 @@ public class OpeningCutsceneDino : MonoBehaviour
     void flip() {
         //dino.transform.localScale = new Vector3(-dino.transform.localScale.x, dino.transform.localScale.y, dino.transform.localScale.z);
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+    }
+
+    public void EndScene()
+    {
+        if (EndingScene == null) StartCoroutine(ContinueEndScene());
+    }
+
+    private IEnumerator ContinueEndScene()
+    {
+        AsyncOperation job = SceneManager.LoadSceneAsync(2);
+        while (!job.isDone)
+        {
+            yield return null;
+        }
+        EndingScene = null;
+        StateMachine.Instance.StateChange(State.Questing);
     }
 }
