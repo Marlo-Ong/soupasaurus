@@ -2484,7 +2484,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Choose your playthrough length
+  m_text: Choose your play time!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7ca9a000b7c2f430496af14f740d2150, type: 2}
   m_sharedMaterial: {fileID: 3259712093742295032, guid: 7ca9a000b7c2f430496af14f740d2150, type: 2}
@@ -2549,7 +2549,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -606.67236, y: -157.95024, z: -434.36322, w: 0}
+  m_margin: {x: -733.98785, y: -157.95024, z: -541.8383, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2753,8 +2753,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AnimType: 1
   FlipThroughSprites:
-  - {fileID: -1483407423975865499, guid: 35a7abc282f344dd48cc57a4173fb01c, type: 3}
-  - {fileID: -8321102221490951993, guid: d3743f0b752c14193bbbb943423dfd63, type: 3}
+  - {fileID: 21300000, guid: 35a7abc282f344dd48cc57a4173fb01c, type: 3}
+  - {fileID: 21300000, guid: d3743f0b752c14193bbbb943423dfd63, type: 3}
   FramesPerSecond: 1
   Y_Offset: 0
   IsLooped: 1
@@ -2779,8 +2779,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 35a7abc282f344dd48cc57a4173fb01c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

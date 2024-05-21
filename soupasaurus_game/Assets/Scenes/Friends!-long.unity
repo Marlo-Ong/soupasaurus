@@ -1227,7 +1227,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1374.7375, y: 635.246}
+  m_SizeDelta: {x: 1374.7375, y: 1100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &773596095
 MonoBehaviour:
@@ -2133,7 +2133,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: new adventure?
+  m_text: Go home
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7ca9a000b7c2f430496af14f740d2150, type: 2}
   m_sharedMaterial: {fileID: 3259712093742295032, guid: 7ca9a000b7c2f430496af14f740d2150, type: 2}
