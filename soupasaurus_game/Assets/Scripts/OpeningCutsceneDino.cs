@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class OpeningCutsceneDino : MonoBehaviour
 {
     public float speed = 500;
+    public float STEP_TIME = 0.75f;
     //GameObject dino;
     //SpriteRenderer dino = GameObject.Find("dino").GetComponent<SpriteRenderer>();
     //GameObject dialogue = GameObject.Find("Image");
@@ -25,30 +26,28 @@ public class OpeningCutsceneDino : MonoBehaviour
 
     IEnumerator something()
     {
-        //yield return new WaitForSeconds(1.0f);
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(3 * STEP_TIME);
         dialogue1.SetActive(false);
 
         flip();
         for(int i = 0; i < 6; i++) {
             moveBackward();
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(STEP_TIME);
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(STEP_TIME);
         dialogue2.SetActive(true);
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(3 * STEP_TIME);
         dialogue2.SetActive(false);
 
         flip();
+        speed = 82;
         for(int i = 0; i < 10; i++) {
             moveForward();
-            speed = 82;
-            //speed = 100;
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(STEP_TIME);
         }
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(STEP_TIME);
 
         AsyncOperation job = SceneManager.LoadSceneAsync(2);
         while (!job.isDone)
@@ -59,7 +58,7 @@ public class OpeningCutsceneDino : MonoBehaviour
     }
 
     IEnumerator waiting() {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(STEP_TIME);
     }
 
     // Update is called once per frame

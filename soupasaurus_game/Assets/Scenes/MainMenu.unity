@@ -579,8 +579,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 35a7abc282f344dd48cc57a4173fb01c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -611,8 +611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AnimType: 1
   FlipThroughSprites:
-  - {fileID: -1483407423975865499, guid: 35a7abc282f344dd48cc57a4173fb01c, type: 3}
-  - {fileID: -8321102221490951993, guid: d3743f0b752c14193bbbb943423dfd63, type: 3}
+  - {fileID: 21300000, guid: 35a7abc282f344dd48cc57a4173fb01c, type: 3}
+  - {fileID: 21300000, guid: d3743f0b752c14193bbbb943423dfd63, type: 3}
   FramesPerSecond: 1
   Y_Offset: 0
   IsLooped: 1
@@ -1523,6 +1523,7 @@ GameObject:
   - component: {fileID: 957105831}
   - component: {fileID: 957105833}
   - component: {fileID: 957105832}
+  - component: {fileID: 957105834}
   m_Layer: 5
   m_Name: mc-dino!
   m_TagString: Untagged
@@ -1587,6 +1588,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 957105830}
   m_CullTransparentMesh: 1
+--- !u!114 &957105834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957105830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b611a05e6d4640a38ab60e78a165de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AnimType: 0
+  FlipThroughSprites: []
+  FramesPerSecond: 1
+  Y_Offset: 5
+  IsLooped: 1
+  PlaysOnStart: 1
 --- !u!1 &991042908
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,7 +1968,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -7403978720321873966, guid: 398d0c3b3a69144b18231cbe3929abe2, type: 3}
+  m_Sprite: {fileID: 5559370947737423570, guid: fd53860970cbb4b05afbdbd22760d55f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2248,7 +2267,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1437780461
 RectTransform:
   m_ObjectHideFlags: 0
