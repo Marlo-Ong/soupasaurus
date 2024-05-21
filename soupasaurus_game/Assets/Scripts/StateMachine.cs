@@ -32,7 +32,7 @@ public class StateMachine : Singleton<StateMachine>
     void Update()
     {
         bool isLandscape = Screen.orientation == ScreenOrientation.LandscapeLeft || Screen.orientation == ScreenOrientation.LandscapeRight;
-        ErrorCanvas.SetActive(!isLandscape);
+        if (ErrorCanvas != null) ErrorCanvas.SetActive(!isLandscape);
     }
 
     public void StateChange(State s)
