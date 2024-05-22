@@ -12,7 +12,7 @@ public enum Biome
     MarsMinestrone
 }
 
-public class QuestSceneManager : Singleton<QuestSceneManager>
+public class QuestSceneManager : MonoBehaviour
 {
     [Header("Panels")]
     public GameObject Panel_Loading;
@@ -46,6 +46,7 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
 
     void Start()
     {
+        StateMachine.OnStateEnter += InitializeScene;
         WebLoader.OnInitialMessage += WebLoader_OnInitialMessage;
         WebLoader.OnSubsequentMessage += WebLoader_OnSubsequentMessage;
         WebLoader.OnNewOptionsGot += WebLoader_OnNewOptionsGot;
@@ -53,13 +54,16 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
         StateMachine.Instance.StateChange(State.Questing);
     }
 
-    public void InitializeScene()
+    public void InitializeScene(State s)
     {
-        Debug.Log("Initialized quest scene manager");
-        _originalGroundPosition = Ground.transform.localPosition;
+        if (s == State.Questing)
+        {
+            Debug.Log("Initialized quest scene manager");
+            _originalGroundPosition = Ground.transform.localPosition;
 
-        // Initialize Gemini handshake
-        WebLoader.Instance.GetUserID();
+            // Initialize Gemini handshake
+            WebLoader.Instance.GetUserID();
+        }
     }
 
     public void WebLoader_OnUserIDGot(string _)
