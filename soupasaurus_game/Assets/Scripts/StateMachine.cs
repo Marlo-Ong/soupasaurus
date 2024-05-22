@@ -84,12 +84,14 @@ public class StateMachine : Singleton<StateMachine>
 
     public void StartCooking()
     {
+        AudioManager.Instance.PlayOneShot(AudioManager.Instance.SFX_UIClick);
         GameObject.Find("Canvas").SetActive(false);
         GameObject.Find("Selection").SetActive(true);
     }
 
     public void ChooseGameplayLength(int rounds)
     {
+        AudioManager.Instance.PlayOneShot(AudioManager.Instance.SFX_UIClick);
         SceneManager.LoadScene(1);
         NumRounds = rounds;
         StateChange(State.StartCutscene);

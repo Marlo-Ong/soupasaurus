@@ -46,12 +46,25 @@ public class QuestSceneManager : MonoBehaviour
 
     void Start()
     {
+        StateMachine.Instance.StateChange(State.Questing);
+    }
+
+    void OnEnable()
+    {
         StateMachine.OnStateEnter += InitializeScene;
         WebLoader.OnInitialMessage += WebLoader_OnInitialMessage;
         WebLoader.OnSubsequentMessage += WebLoader_OnSubsequentMessage;
         WebLoader.OnNewOptionsGot += WebLoader_OnNewOptionsGot;
         WebLoader.OnUserIDGot += WebLoader_OnUserIDGot;
-        StateMachine.Instance.StateChange(State.Questing);
+    }
+
+    void OnDestroy()
+    {
+        StateMachine.OnStateEnter -= InitializeScene;
+        WebLoader.OnInitialMessage -= WebLoader_OnInitialMessage;
+        WebLoader.OnSubsequentMessage -= WebLoader_OnSubsequentMessage;
+        WebLoader.OnNewOptionsGot -= WebLoader_OnNewOptionsGot;
+        WebLoader.OnUserIDGot -= WebLoader_OnUserIDGot;
     }
 
     public void InitializeScene(State s)
