@@ -154,6 +154,9 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
     private IEnumerator NextLevel()
     {
         Debug.Log($"Ending level {currentLevelIndex}");
+
+        // Get ingredient given by dino
+        WebLoader.Instance.GetConversation();
         
         // Animate ground going down
         float duration = Timing_Duration_GroundRaise;
@@ -161,7 +164,6 @@ public class QuestSceneManager : Singleton<QuestSceneManager>
         {
             Vector3 offset = new(0, Curve_GroundRaise.Evaluate(duration/Timing_Duration_GroundRaise), 0);
             Ground.transform.localPosition = _originalGroundPosition + offset;
-            Debug.Log(Ground.transform.localPosition);
             duration -= Time.deltaTime;
             yield return null;
         }

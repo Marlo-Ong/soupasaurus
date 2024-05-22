@@ -40,6 +40,20 @@ public class ConvoObject
     public bool done;
 }
 
+[Serializable]
+public class CompletedConvoObject
+{
+    public string user_id;
+    public string conversation_id;
+    public string character_name;
+    public string[] history;
+    public string[] options;
+    public string type;
+    public string mtbi;
+    public string ingredient;
+    public bool done;
+}
+
 public class WebLoader : Singleton<WebLoader>
 {
     public string UserID;
@@ -47,6 +61,7 @@ public class WebLoader : Singleton<WebLoader>
     public string URI;
     public static event UnityAction<ConvoObject> OnInitialMessage;
     public static event UnityAction<ConvoObject> OnSubsequentMessage;
+    public static event UnityAction<CompletedConvoObject> OnGetConvo;
     public static event UnityAction<string[]> OnNewOptionsGot;
     public static event UnityAction<string> OnUserIDGot;
     public static event UnityAction<SoupObject> OnGetSoup;
@@ -59,6 +74,11 @@ public class WebLoader : Singleton<WebLoader>
     public void GetSoup()
     {
         StartCoroutine(ContinueGetSoup());
+    }
+
+    public void GetConversation()
+    {
+        StartCoroutine(ContinueGetConversation());
     }
 
     public void PostInitialMessage()
@@ -191,6 +211,35 @@ public class WebLoader : Singleton<WebLoader>
             ConvoObject c = JsonUtility.FromJson<ConvoObject>(uwr.downloadHandler.text);
             Debug.Log($"Successfully posted subsequent message.");
             OnSubsequentMessage?.Invoke(c);
+        }
+    }
+
+    IEnumerator ContinueGetConversation()
+    {
+        if (string.IsNullOrEmpty(UserID) || string.IsNullOrEmpty(ConversationID))
+        {
+            Debug.LogWarning("No user ID or convo ID found when trying to GET /conversation/");
+            yield break;
+        }
+
+        // Construct the URI with the score
+        string uri = $"{URI}/conversation/{UserID}/{ConversationID}";
+
+        // Create the UnityWebRequest
+        using UnityWebRequest uwr = UnityWebRequest.Get(uri);
+
+        // Send the request and wait for it to complete
+        yield return uwr.SendWebRequest();
+
+        if (uwr.result == UnityWebRequest.Result.ConnectionError)
+        {
+            Debug.LogWarning("Error: " + uwr.error);
+        }
+        else
+        {
+            CompletedConvoObject c = JsonUtility.FromJson<CompletedConvoObject>(uwr.downloadHandler.text);
+            Debug.Log($"Successfully got completed combo: {uwr.downloadHandler.text}");
+            OnGetConvo?.Invoke(c);
         }
     }
 
