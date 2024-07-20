@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5219188297818685736}
   - component: {fileID: 4433138263099611922}
   - component: {fileID: 1020675645134207355}
+  - component: {fileID: 3617016773502354673}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -68,7 +69,7 @@ MonoBehaviour:
   m_text: i am a button
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7ca9a000b7c2f430496af14f740d2150, type: 2}
-  m_sharedMaterial: {fileID: 3259712093742295032, guid: 7ca9a000b7c2f430496af14f740d2150, type: 2}
+  m_sharedMaterial: {fileID: 0}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -136,6 +137,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3617016773502354673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770552202461295988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6366ee97f6b541449155028b9487355a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1027678948109503279
 GameObject:
   m_ObjectHideFlags: 0

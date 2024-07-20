@@ -18,6 +18,7 @@ public class OpeningCutsceneDino : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AudioManager.Instance.IsCutscenePlaying = true;
         dialogue1 = GameObject.Find("Dialogue1");
         dialogue2 = GameObject.Find("Dialogue2");
         dialogue2.SetActive(false);
@@ -93,6 +94,7 @@ public class OpeningCutsceneDino : MonoBehaviour
 
     private IEnumerator ContinueEndScene()
     {
+        AudioManager.Instance.IsCutscenePlaying = false;
         AsyncOperation job = SceneManager.LoadSceneAsync(2);
         while (!job.isDone)
         {
