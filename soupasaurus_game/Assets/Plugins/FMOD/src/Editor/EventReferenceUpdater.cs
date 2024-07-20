@@ -689,11 +689,14 @@ namespace FMODUnity
                             int index = 0;
                             foreach (object item in value as System.Collections.IEnumerable)
                             {
-                                foreach (Task t in GetGenericUpdateTasks(item, FieldPath(subObjectPath, subObjectField.Name, index), parents))
+                                if (item != null)
                                 {
-                                    yield return t;
+                                    foreach (Task t in GetGenericUpdateTasks(item, FieldPath(subObjectPath, subObjectField.Name, index), parents))
+                                    {
+                                        yield return t;
+                                    }
+                                    index++;
                                 }
-                                index++;
                             }
                         }
                         else
