@@ -422,8 +422,11 @@ Use the following format and types:
 
     async def init_conversation(self) -> Conversation:
         # unseen characters is the difference between all characters and seen characters
+        random_character = random.choice(list(set(characters) - self.seen_characters))
+        seen_characters.add(random_character)
+
         new_conversation = Conversation(
-            conv_character=random.choice(list(set(characters) - self.seen_characters)),
+            conv_character=random_character,
             conv_type=self.get_next_evaluation(),
         )
 
