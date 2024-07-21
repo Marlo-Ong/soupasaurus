@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{fbc9ef7f-1500-44ce-93c2-5f2a798375ba}">
+	<object class="AudioFile" id="{739eea1b-33ef-45cf-b97a-cd57993ea595}">
 		<property name="assetPath">
-			<value>hotel-bell-ding-1-174457.mp3</value>
+			<value>main_theme/main_menu_bg_EXTRA.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
 		</property>
 		<property name="frequencyInKHz">
-			<value>48</value>
+			<value>44.0999985</value>
 		</property>
 		<property name="channelCount">
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>4.032</value>
+			<value>61.361632653061221</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{da3d9940-5545-4bca-91be-26f51a452fb5}</destination>

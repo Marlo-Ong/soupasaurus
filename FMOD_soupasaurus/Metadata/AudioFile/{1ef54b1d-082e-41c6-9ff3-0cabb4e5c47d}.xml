@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="AudioFile" id="{90ce8207-12dc-4cd5-907d-4246b4dff6f7}">
-		<property name="assetPath" />
+	<object class="AudioFile" id="{1ef54b1d-082e-41c6-9ff3-0cabb4e5c47d}">
+		<property name="assetPath">
+			<value>main_theme/main_menu_bg_ALWAYS.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
 		<property name="frequencyInKHz">
-			<value>24</value>
+			<value>44.0999985</value>
 		</property>
 		<property name="channelCount">
 			<value>2</value>
 		</property>
 		<property name="length">
-			<value>4.7999999999999998</value>
+			<value>61.361632653061221</value>
 		</property>
 		<relationship name="masterAssetFolder">
 			<destination>{da3d9940-5545-4bca-91be-26f51a452fb5}</destination>

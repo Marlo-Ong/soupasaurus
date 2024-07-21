@@ -48,6 +48,7 @@ public class StateMachine : Singleton<StateMachine>
         switch (s)
         {
             case State.StartCutscene:
+                AudioManager.Instance.IsCutscenePlaying = true;
                 break;
             case State.Title:
                 break;
@@ -56,7 +57,7 @@ public class StateMachine : Singleton<StateMachine>
             case State.Questing:
                 break;
             case State.Fin:
-                StartCoroutine(StartSoupScene());
+                SceneManager.LoadSceneAsync(3);
                 break;
             case State.Friends:
                 break;
@@ -70,6 +71,7 @@ public class StateMachine : Singleton<StateMachine>
         switch (s)
         {
             case State.StartCutscene:
+                AudioManager.Instance.IsCutscenePlaying = false;
                 break;
             case State.Title:
                 break;
@@ -95,14 +97,5 @@ public class StateMachine : Singleton<StateMachine>
         SceneManager.LoadScene(1);
         NumRounds = rounds;
         StateChange(State.StartCutscene);
-    }
-
-    IEnumerator StartSoupScene()
-    {
-        AsyncOperation job = SceneManager.LoadSceneAsync(3);
-        while (!job.isDone)
-        {
-            yield return null;
-        }
     }
 }

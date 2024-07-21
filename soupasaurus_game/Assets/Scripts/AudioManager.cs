@@ -1,14 +1,17 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 
 public class AudioManager : Singleton<AudioManager>
 {
     public EventReference SFX_UIClick;
+    public EventReference SFX_DingBell2;
+    public EventReference SFX_DingBell3;
     public EventReference MUS_Background;
-    private FMOD.Studio.EventInstance MUS_Instance_Background;
-    private FMOD.Studio.EventInstance MUS_Instance_DinoTheme;
+    private static Dictionary<string, EventInstance> musicInstances;
 
     private const string FMODParam_PlayingCutscene = "PlayingCutscene";
 
@@ -20,14 +23,18 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
+        musicInstances ??= new();
+
         StartCoroutine(LoadBanksAsync());
     }
 
     private IEnumerator LoadBanksAsync()
     {
-        while (!FMODUnity.RuntimeManager.HaveAllBanksLoaded)
+        while (!RuntimeManager.HaveAllBanksLoaded)
         {
             yield return null;
         }
@@ -40,8 +47,21 @@ public class AudioManager : Singleton<AudioManager>
 
         Debug.Log("Loaded all banks");
 
-        this.MUS_Instance_Background = RuntimeManager.CreateInstance(MUS_Background);
-        this.MUS_Instance_Background.start();
+        this.PlayMusic(this.MUS_Background);
+    }
+
+    public void PlayMusic(EventReference eventRef)
+    {
+        PlayMusic(eventRef.Path);
+    }
+
+    public void PlayMusic(string path)
+    {
+        if (IsEventPlaying(path))
+            return;
+
+        musicInstances[path] = RuntimeManager.CreateInstance(path);
+        musicInstances[path].start();
     }
 
     public void PlayOneShot(EventReference sound)
@@ -51,15 +71,26 @@ public class AudioManager : Singleton<AudioManager>
 
     public void PlayDinoTheme(string dinoName)
     {
-        string dinoTheme = $"event:/Music/Dino/{dinoName}";
         try
         {
-            this.MUS_Instance_DinoTheme = RuntimeManager.CreateInstance(dinoTheme);
-            this.MUS_Instance_DinoTheme.start();
+            string dinoTheme = $"event:/Music/Dinos/{dinoName}";
+            PlayMusic(dinoTheme);
         }
         catch (Exception e)
         {
             Debug.LogWarning(e);
         }
+    }
+
+    private bool IsEventPlaying(string path)
+    {
+        if (musicInstances.ContainsKey(path))
+        {
+            musicInstances[path].getPlaybackState(out PLAYBACK_STATE state);
+            if (state == PLAYBACK_STATE.PLAYING || state == PLAYBACK_STATE.STARTING)
+                return true;
+        }
+
+        return false;
     }
 }

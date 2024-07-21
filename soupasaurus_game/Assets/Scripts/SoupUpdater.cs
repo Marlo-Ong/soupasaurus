@@ -42,6 +42,7 @@ public class SoupUpdater : MonoBehaviour
     void WebLoader_OnGetSoup(SoupObject s)
     {
         Panel_Loading.SetActive(false);
+        AudioManager.Instance.PlayOneShot(AudioManager.Instance.SFX_DingBell3);
         SoupName.text = s.soup_name;
         MTBIDescription.text = $"{s.mtbi}: " + MTBIDescriptions[s.mtbi];
         string t = "";

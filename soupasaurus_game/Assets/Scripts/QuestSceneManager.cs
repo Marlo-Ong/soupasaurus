@@ -106,6 +106,7 @@ public class QuestSceneManager : MonoBehaviour
 
     public void WebLoader_OnInitialMessage(ConvoObject c)
     {
+        StateMachine.Instance.NamesOfDinosMet.Add(c.character_name);
         WebLoader_OnSubsequentMessage(c);
         StartCoroutine(ContinueGameCutscene());
     }
@@ -116,7 +117,6 @@ public class QuestSceneManager : MonoBehaviour
         Panel_SpeechLoadingDots.SetActive(false);
         Panel_AISpeechBubble.GetComponentInChildren<TMP_Text>().text = c.response;
         Text_DinoName.text = c.character_name;
-        StateMachine.Instance.NamesOfDinosMet.Add(c.character_name);
 
         if (c.done)
         {
@@ -171,6 +171,7 @@ public class QuestSceneManager : MonoBehaviour
     private IEnumerator NextLevel()
     {
         Debug.Log($"Ending level {currentLevelIndex}");
+        AudioManager.Instance.PlayOneShot(AudioManager.Instance.SFX_DingBell2);
 
         // Get ingredient given by dino
         WebLoader.Instance.GetConversation();

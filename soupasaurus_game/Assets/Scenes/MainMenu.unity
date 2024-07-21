@@ -572,12 +572,26 @@ MonoBehaviour:
       Data3: 1602048442
       Data4: 952770634
     Path: event:/UI_Click
+  SFX_DingBell2:
+    Guid:
+      Data1: -1256383337
+      Data2: 1205737613
+      Data3: -981669477
+      Data4: -1559892680
+    Path: event:/Conversation_End
+  SFX_DingBell3:
+    Guid:
+      Data1: 891762942
+      Data2: 1106555548
+      Data3: -1275513425
+      Data4: -461983889
+    Path: event:/Soup_Start
   MUS_Background:
     Guid:
-      Data1: -158347206
-      Data2: 1139704909
-      Data3: 1226501036
-      Data4: 1315085616
+      Data1: -1966183023
+      Data2: 1293966434
+      Data3: 1251448453
+      Data4: 281837223
     Path: event:/Music_Start
 --- !u!1 &318171463
 GameObject:
