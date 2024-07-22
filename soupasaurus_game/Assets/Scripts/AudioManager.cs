@@ -23,6 +23,8 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
+    #region Unity Callbacks
+
     protected override void Awake()
     {
         base.Awake();
@@ -31,6 +33,26 @@ public class AudioManager : Singleton<AudioManager>
 
         StartCoroutine(LoadBanksAsync());
     }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        // Pause sound if tab is not in focus
+        if (RuntimeManager.StudioSystem.isValid())
+        {
+            RuntimeManager.PauseAllEvents(!focus);
+
+            if (!focus)
+            {
+                RuntimeManager.CoreSystem.mixerSuspend();
+            }
+            else
+            {
+                RuntimeManager.CoreSystem.mixerResume();
+            }
+        }
+    }
+
+    #endregion
 
     private IEnumerator LoadBanksAsync()
     {
@@ -52,7 +74,8 @@ public class AudioManager : Singleton<AudioManager>
 
     public void PlayMusic(EventReference eventRef)
     {
-        PlayMusic(eventRef.Path);
+        RuntimeManager.StudioSystem.lookupPath(eventRef.Guid, out string path);
+        PlayMusic(path);
     }
 
     public void PlayMusic(string path)
@@ -73,7 +96,7 @@ public class AudioManager : Singleton<AudioManager>
     {
         try
         {
-            string dinoTheme = $"event:/Music/Dinos/{dinoName}";
+            string dinoTheme = "event:/" + dinoName;
             PlayMusic(dinoTheme);
         }
         catch (Exception e)

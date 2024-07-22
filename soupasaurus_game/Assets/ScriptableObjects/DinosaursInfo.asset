@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123736a190b074229a21bb272b3effb6, type: 3}
+  m_Name: DinosaursInfo
+  m_EditorClassIdentifier: 
+  dinoNames:
+  - Abnormally Large Bird
+  - Flower Brontosaurus
+  - Cinnamunchsaurus
+  - Count Dinovamp
+  - Dinodoor
+  - Dinomore
+  - Dinosoar
+  - Jellyjelly
+  - Lippysaurus
+  - Megladon
+  - Pastasaurus
+  - Sherlock-saurus
+  - Spiderlily-saurus
+  - T-Wrecks
+  - Terrordactyl
+  - Tricycleteratops
+  - Velocityraptor
+  - Vinylsaur
+  - Winosaur
+  dinoSprites:
+  - {fileID: -5419690018834563517, guid: 1008ab8aa5db3463d91ae222ea4d4159, type: 3}
+  - {fileID: 5268555768060470767, guid: c1666c08e3b3f4513a2dc8ce30bf377a, type: 3}
+  - {fileID: -7402311875193809838, guid: 9b97f2bdb50b2450b95e22556e009e48, type: 3}
+  - {fileID: 6795801058091399837, guid: ceab7d7b29f2342dfa7aa84c5a5a880a, type: 3}
+  - {fileID: 7735239307877574490, guid: 7d391fe7c31174416b3f5aff3026f87a, type: 3}
+  - {fileID: 7390703848661599155, guid: 519f714f2456a4fa6bdbd48b232ff8b6, type: 3}
+  - {fileID: 3398191391438066125, guid: 1e4337c73f50649128df4b621b35a4d6, type: 3}
+  - {fileID: 5868939859092394483, guid: e00c34dd37bf848b0b99da60f316b5f3, type: 3}
+  - {fileID: -5497378670649944087, guid: 2f9a687340acd455cad674ccf7d6c02e, type: 3}
+  - {fileID: 7630161489650183876, guid: 6619d3880e55042d9a9506aa5e6518ad, type: 3}
+  - {fileID: -125550873265458564, guid: 221b1c9cea42d45c99674394333e7e79, type: 3}
+  - {fileID: 6053919790626924708, guid: f5cf9386b74c64929922eb1d53cbd925, type: 3}
+  - {fileID: -231250904800061007, guid: 2e0b5c94ee4784a609c5e6f5702878fc, type: 3}
+  - {fileID: 7667744028061042312, guid: 930e992692d674305a60356d241844d1, type: 3}
+  - {fileID: 8317175330310204082, guid: 2ac6a5ba4d1f24607b8b9fd22a6538b3, type: 3}
+  - {fileID: 6428272639043824107, guid: e471069cf5f5e46479b30e5e8da3382d, type: 3}
+  - {fileID: -5393597298639458365, guid: e0da4b4e1dc4a4e01a2b573207cb88f2, type: 3}
+  - {fileID: -1232535546836218199, guid: 03788a45af6d54cc490599141093efc0, type: 3}
+  - {fileID: -3318228808182651714, guid: 434f780ca551c4b3e8c821f7d197a7c0, type: 3}

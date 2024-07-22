@@ -14,7 +14,7 @@ public class DinoFriendLoader : MonoBehaviour
         for (int i = 0; i < StateMachine.Instance.NamesOfDinosMet.Count; i++)
         {
             string name = StateMachine.Instance.NamesOfDinosMet[i];
-            DinoFriends[i].sprite = DinoLoader.Instance.dinoSprites[DinoLoader.Instance.dinoNames.IndexOf(name)];
+            DinoFriends[i].sprite = StateMachine.DinoSprites[StateMachine.DinoNames.IndexOf(name)];
             DinoFriends[i].gameObject.SetActive(true);
         }
     }

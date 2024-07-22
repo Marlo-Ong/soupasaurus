@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
@@ -22,6 +23,9 @@ public class StateMachine : Singleton<StateMachine>
     public int NumRounds;
     public List<string> NamesOfDinosMet;
     public GameObject ErrorCanvas;
+    [SerializeField] private DinosaurInfo dinosaurInfo;
+    [HideInInspector] public static List<Sprite> DinoSprites => Instance.dinosaurInfo.dinoSprites;
+    [HideInInspector] public static List<string> DinoNames => Instance.dinosaurInfo.dinoNames;
 
     void Start()
     {

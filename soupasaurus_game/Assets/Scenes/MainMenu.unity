@@ -3203,6 +3203,7 @@ MonoBehaviour:
   NumRounds: 0
   NamesOfDinosMet: []
   ErrorCanvas: {fileID: 1437780460}
+  dinosaurInfo: {fileID: 11400000, guid: b175bfbcde0404f62a5393d132debc7b, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

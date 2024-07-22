@@ -31,9 +31,9 @@ public class QuestSceneManager : MonoBehaviour
     private int currentLevelIndex = -1;
     private int maxLevels {get {return StateMachine.Instance.NumRounds;}}
 
-    [Header("Animation Controllers")]
-    public AnimationController PlayerDinoAnim;
-    public AnimationController AIDinoAnim;
+    [Header("Dinosaur Sprites")]
+    public SpriteRenderer PlayerDinoSprite;
+    public SpriteRenderer AIDinoSprite;
 
     [Header("Animation Parameters")]
     public float Timing_Delay_AfterLoad;
@@ -52,6 +52,7 @@ public class QuestSceneManager : MonoBehaviour
     void OnEnable()
     {
         StateMachine.OnStateEnter += InitializeScene;
+        WebLoader.OnInitialMessage += WebLoader_OnMessagePosted;
         WebLoader.OnInitialMessage += WebLoader_OnInitialMessage;
         WebLoader.OnSubsequentMessage += WebLoader_OnSubsequentMessage;
         WebLoader.OnNewOptionsGot += WebLoader_OnNewOptionsGot;
@@ -61,6 +62,7 @@ public class QuestSceneManager : MonoBehaviour
     void OnDestroy()
     {
         StateMachine.OnStateEnter -= InitializeScene;
+        WebLoader.OnInitialMessage -= WebLoader_OnMessagePosted;
         WebLoader.OnInitialMessage -= WebLoader_OnInitialMessage;
         WebLoader.OnSubsequentMessage -= WebLoader_OnSubsequentMessage;
         WebLoader.OnNewOptionsGot -= WebLoader_OnNewOptionsGot;
@@ -77,11 +79,6 @@ public class QuestSceneManager : MonoBehaviour
             // Initialize Gemini handshake
             WebLoader.Instance.GetUserID();
         }
-    }
-
-    public void WebLoader_OnUserIDGot(string _)
-    {
-        CreateLevel();
     }
 
     public void CreateLevel()
@@ -103,6 +100,17 @@ public class QuestSceneManager : MonoBehaviour
     }
 
     #region WebLoader
+
+    public void WebLoader_OnUserIDGot(string _)
+    {
+        CreateLevel();
+    }
+
+    private void WebLoader_OnMessagePosted(ConvoObject c)
+    {
+        AIDinoSprite.sprite = StateMachine.DinoSprites[StateMachine.DinoNames.IndexOf(c.character_name)];
+        AudioManager.Instance.PlayDinoTheme(c.character_name);
+    }
 
     public void WebLoader_OnInitialMessage(ConvoObject c)
     {
