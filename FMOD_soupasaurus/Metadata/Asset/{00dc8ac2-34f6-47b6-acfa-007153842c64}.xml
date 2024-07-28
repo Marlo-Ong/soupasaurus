@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EncodableAsset" id="{00dc8ac2-34f6-47b6-acfa-007153842c64}">
+		<property name="assetPath">
+			<value>dino_themes/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{da3d9940-5545-4bca-91be-26f51a452fb5}</destination>
+		</relationship>
+	</object>
+</objects>

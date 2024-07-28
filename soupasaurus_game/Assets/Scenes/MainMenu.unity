@@ -588,11 +588,11 @@ MonoBehaviour:
     Path: event:/Soup_Start
   MUS_Background:
     Guid:
-      Data1: -1966183023
-      Data2: 1293966434
-      Data3: 1251448453
-      Data4: 281837223
-    Path: event:/Music_Start
+      Data1: -1296714388
+      Data2: 1080739466
+      Data3: -995847012
+      Data4: 480623669
+    Path: event:/BG
 --- !u!1 &318171463
 GameObject:
   m_ObjectHideFlags: 0

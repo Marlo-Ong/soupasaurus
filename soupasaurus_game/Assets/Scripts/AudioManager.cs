@@ -14,6 +14,7 @@ public class AudioManager : Singleton<AudioManager>
     private static Dictionary<string, EventInstance> musicInstances;
 
     private const string FMODParam_PlayingCutscene = "PlayingCutscene";
+    private const string FMODParam_DinoName = "DinoName";
 
     public bool IsCutscenePlaying
     {
@@ -96,8 +97,7 @@ public class AudioManager : Singleton<AudioManager>
     {
         try
         {
-            string dinoTheme = "event:/" + dinoName;
-            PlayMusic(dinoTheme);
+            RuntimeManager.StudioSystem.setParameterByNameWithLabel(FMODParam_DinoName, dinoName);
         }
         catch (Exception e)
         {

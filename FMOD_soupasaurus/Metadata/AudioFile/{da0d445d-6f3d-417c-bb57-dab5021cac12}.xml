@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{da0d445d-6f3d-417c-bb57-dab5021cac12}">
+		<property name="assetPath">
+			<value>dino_themes/pastasaurus_intro.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>5.6424489795918369</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{da3d9940-5545-4bca-91be-26f51a452fb5}</destination>
+		</relationship>
+	</object>
+</objects>
