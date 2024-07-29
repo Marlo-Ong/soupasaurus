@@ -30,7 +30,6 @@ public class StateMachine : Singleton<StateMachine>
     void Start()
     {
         NamesOfDinosMet = new();
-        StateEnter(State.Title);
     }
 
     void Update()
@@ -55,6 +54,7 @@ public class StateMachine : Singleton<StateMachine>
                 AudioManager.Instance.IsCutscenePlaying = true;
                 break;
             case State.Title:
+                SceneManager.LoadScene(0);
                 break;
             case State.Menu:
                 break;
@@ -82,6 +82,9 @@ public class StateMachine : Singleton<StateMachine>
             case State.Menu:
                 break;
             case State.Questing:
+                break;
+            case State.Friends:
+                NamesOfDinosMet.Clear();
                 break;
         }
 

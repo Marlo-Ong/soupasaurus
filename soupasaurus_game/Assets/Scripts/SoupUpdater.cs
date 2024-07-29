@@ -38,6 +38,11 @@ public class SoupUpdater : MonoBehaviour
         WebLoader.Instance.GetSoup();
     }
 
+    void OnDestroy()
+    {
+        WebLoader.OnGetSoup -= WebLoader_OnGetSoup;
+    }
+
 
     void WebLoader_OnGetSoup(SoupObject s)
     {
@@ -55,6 +60,7 @@ public class SoupUpdater : MonoBehaviour
 
     public void NextScene()
     {
+        StateMachine.Instance.StateChange(State.Friends);
         SceneManager.LoadScene(4);
     }
 }

@@ -1755,6 +1755,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Panel_Loading: {fileID: 176791152}
   Ground: {fileID: 304639827}
+  Banner: {fileID: 1742970901}
   Panel_AISpeechBubble: {fileID: 897963578}
   Panel_SpeechLoadingDots: {fileID: 1763713379}
   SceneButtons:

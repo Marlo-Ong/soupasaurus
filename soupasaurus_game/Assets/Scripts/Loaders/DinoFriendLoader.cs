@@ -21,6 +21,6 @@ public class DinoFriendLoader : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(0);
+        StateMachine.Instance.StateChange(State.Title);
     }
 }

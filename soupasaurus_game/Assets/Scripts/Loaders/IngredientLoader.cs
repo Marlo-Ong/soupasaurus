@@ -27,7 +27,16 @@ public class IngredientLoader : MonoBehaviour
             { "judging", IngredientSprites[6] },     // red meat/fish
             { "perceiving", IngredientSprites[7] },  // white meat/fish
         };
+    }
+
+    void OnEnable()
+    {
         WebLoader.OnGetConvo += WebLoader_OnGetConvo;
+    }
+
+    void OnDisable()
+    {
+        WebLoader.OnGetConvo -= WebLoader_OnGetConvo;
     }
 
     public void WebLoader_OnGetConvo(CompletedConvoObject c)

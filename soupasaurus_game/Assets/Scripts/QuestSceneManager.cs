@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum Biome
@@ -17,6 +16,7 @@ public class QuestSceneManager : MonoBehaviour
     [Header("Panels")]
     public GameObject Panel_Loading;
     public GameObject Ground;
+    public GameObject Banner;
     public GameObject Panel_AISpeechBubble;
     public GameObject Panel_SpeechLoadingDots;
     public List<Button> SceneButtons;
@@ -43,6 +43,7 @@ public class QuestSceneManager : MonoBehaviour
     public float Timing_Delay_BeforeNextLevel;
 
     private Vector3 _originalGroundPosition;
+    private Vector3 _originalBannerPosition;
 
     void Start()
     {
@@ -75,6 +76,7 @@ public class QuestSceneManager : MonoBehaviour
         {
             Debug.Log("Initialized quest scene manager");
             _originalGroundPosition = Ground.transform.localPosition;
+            _originalBannerPosition = Banner.transform.localPosition;
 
             // Initialize Gemini handshake
             WebLoader.Instance.GetUserID();
@@ -170,10 +172,11 @@ public class QuestSceneManager : MonoBehaviour
         {
             Vector3 offset = new(0, Curve_GroundRaise.Evaluate(duration/Timing_Duration_GroundRaise), 0);
             Ground.transform.localPosition = _originalGroundPosition + offset;
+            Banner.transform.localPosition = _originalBannerPosition + offset;
+
             duration += Time.deltaTime;
             yield return null;
         }
-        Debug.Log("ContinueGameCutscene done");
     }
 
     private IEnumerator NextLevel()
@@ -190,6 +193,7 @@ public class QuestSceneManager : MonoBehaviour
         {
             Vector3 offset = new(0, Curve_GroundRaise.Evaluate(duration/Timing_Duration_GroundRaise), 0);
             Ground.transform.localPosition = _originalGroundPosition + offset;
+            Banner.transform.localPosition = _originalBannerPosition + offset;
             duration -= Time.deltaTime;
             yield return null;
         }

@@ -150,7 +150,16 @@ public class WebLoader : Singleton<WebLoader>
             ConversationID = c.conversation_id;
             Debug.Log("Successfully posted initial message.");
             Debug.Log($"Unpacked JSON: {c.conversation_id}, {c.response} / Given JSON: {uwr.downloadHandler.text}");
-            OnInitialMessage?.Invoke(c);
+
+            if (string.IsNullOrEmpty(c.conversation_id) || string.IsNullOrEmpty(c.response))
+            {
+                Debug.LogWarning("Unexpected error pasing the result. Returning to main menu.");
+                StateMachine.Instance.StateChange(State.Title);
+            }
+            else
+            {
+                OnInitialMessage?.Invoke(c);
+            }
         }
     }
 
